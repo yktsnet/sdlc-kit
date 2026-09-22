@@ -6,7 +6,7 @@ SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STAMP=".sdlc-kit"
 BASE=(doc-style guards branch-pr)
 FLOWS=(flow-issue flow-single)
-EXTRAS=(phase-mvp phase-guarantee)
+EXTRAS=(phase-mvp phase-guarantee daily-report)
 
 usage() {
   cat <<'USAGE'
@@ -21,12 +21,13 @@ usage:
 追加単位
   mvp         PLAN.md / JUDGE.md。立ち上がり期の駆動文書
   guarantee   docs/guarantees.md。リリース後の駆動文書
+  report      日報。push 済みのコミットから上司・ステークホルダー向けの1枚を書く
 
 doc-style・guards・branch-pr はどれを選んでも必ず入る。
 
 例:
   ./install.sh ~/repos/myrepo single
-  ./install.sh ~/repos/myrepo issue mvp guarantee
+  ./install.sh ~/repos/myrepo issue mvp guarantee report
   ./install.sh --diff ~/repos/myrepo
 USAGE
 }
@@ -37,6 +38,7 @@ resolve() {
     single|flow-single)         echo flow-single ;;
     mvp|phase-mvp)              echo phase-mvp ;;
     guarantee|phase-guarantee)  echo phase-guarantee ;;
+    report|daily-report)        echo daily-report ;;
     doc-style|guards|branch-pr) echo "$1" ;;
     *)                          return 1 ;;
   esac

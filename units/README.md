@@ -87,6 +87,23 @@ docs/ops/phase-guarantee.md       何を載せるか、追従のしかた、取�
 入れる前に読む: [guarantee-audit](phase-guarantee/.claude/skills/guarantee-audit/SKILL.md) /
 [phase-guarantee.md](phase-guarantee/docs/ops/phase-guarantee.md)
 
+## daily-report — 日報
+
+push 済みのコミットから、Issue も PR も開かない読み手（上司・ステークホルダー）へ向けた1枚を
+書く。入力が git なので、どちらの作業フローとも組める。単独で入れてもよい。
+
+日報だけは `docs/reports/<担当者>/` と担当者ごとに分かれる。日報がファイル名を日付だけで
+決めるからで、同じ日に2人が書くと1枚を取り合う。
+
+```text
+docs/reports/                 日報の置き場。担当者ごとのディレクトリは skill が作る
+.claude/skills/daily-report/  日報 skill と出力テンプレート
+docs/ops/daily-report.md      何のためにあるか、取り込んだあとにやること
+```
+
+入れる前に読む: [daily-report.md](daily-report/docs/ops/daily-report.md) /
+[daily-report](daily-report/.claude/skills/daily-report/SKILL.md)
+
 ## flow-issue — 起票 → 実装 → 完了
 
 着手前の合意を `issues/` の Issue ファイルに残す。三役（user / 相談者 / 実行者）の分業つき。
