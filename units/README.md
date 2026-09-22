@@ -34,11 +34,30 @@ docs/ops/doc-style.md         リポに置く理由と、リポ固有に決め�
 
 ```text
 .claude/hooks/no-push-to-main.sh   行為で判定する遮断
-.claude/settings.snippet.json      フックの登録と、文字列で足りる deny
+.claude/settings.guards.snippet.json   フックの登録と、文字列で足りる deny
 docs/ops/guards.md                 なぜ文書でなく機構か、取り込んだあとにやること
 ```
 
 入れる前に読む: [guards.md](guards/docs/ops/guards.md)
+
+## branch-pr — ブランチと PR の扱い
+
+ブランチの単位＝PR の単位。戻す範囲を変更1本に閉じるための決まりと、済んだブランチを
+残さないための機構を置く。
+
+**選ばせない。** どの単位を選んでも一緒に入る。
+
+```text
+.claude/hooks/branch-check.sh          セッション開始時にマージ済みブランチを掃除し、居残りを報告
+.claude/settings.branch-pr.snippet.json  上記フックの登録
+.github/workflows/                     マージされた PR の head ブランチを削除する
+docs/ops/branch-and-pr.md              何を1本にするか、マージ、片付け、載せないもの
+```
+
+フックとワークフローは対で働く。リモートはマージ時にワークフローが消し、フックが報告するのは
+その取りこぼし（マージ前に閉じた PR など）だけになる。
+
+入れる前に読む: [branch-and-pr.md](branch-pr/docs/ops/branch-and-pr.md)
 
 ## phase-mvp — 立ち上がり期の駆動文書
 
@@ -92,7 +111,7 @@ docs/ops/workflow.md          一周の流れ、起動と公開の手順、取�
 
 ```text
 .claude/skills/work/          完了条件を宣言し、実装してコミットまで
-.claude/skills/hand-off/      完了条件を証拠で裏付け、PR を立てる
+.claude/skills/hand-off/      完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
 docs/ops/workflow.md          一周の流れ、乗り換える合図、取り込んだあとにやること
 ```
 
@@ -106,7 +125,7 @@ docs/ops/workflow.md          一周の流れ、乗り換える合図、取り�
 
 共通してやることは3つ。
 
-1. `.claude/settings.snippet.json` を `.claude/settings.json` へマージし、snippet を消す
+1. `.claude/settings.*.snippet.json` をすべて `.claude/settings.json` へマージし、snippet を消す
 2. `<...>` の形で残してある穴を埋める（`grep -rn "<[^>]*>" .claude/skills docs/ops`）
 3. `CLAUDE.md` に、フェーズと作業フローへの**参照**を書く
 

@@ -16,7 +16,7 @@
 
 ```text
 .claude/hooks/no-push-to-main.sh   main への push・force push・gh pr merge を拒否する
-.claude/settings.snippet.json      上記フックの登録と、前方一致で足りる deny
+.claude/settings.guards.snippet.json   上記フックの登録と、前方一致で足りる deny
 ```
 
 deny は文字列で判定できるものを受け持ち、フックは行為で判定するものを受け持つ。
@@ -25,7 +25,7 @@ deny は文字列で判定できるものを受け持ち、フックは行為で
 
 ## 取り込んだあとにやること
 
-1. `.claude/settings.snippet.json` を `.claude/settings.json` へマージし、snippet を消す
+1. `.claude/settings.*.snippet.json` をすべて `.claude/settings.json` へマージし、snippet を消す
 2. `chmod +x .claude/hooks/no-push-to-main.sh`
 3. 動作を確かめる
 

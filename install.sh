@@ -4,7 +4,7 @@ set -euo pipefail
 
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STAMP=".sdlc-kit"
-BASE=(doc-style guards)
+BASE=(doc-style guards branch-pr)
 FLOWS=(flow-issue flow-single)
 EXTRAS=(phase-mvp phase-guarantee)
 
@@ -22,7 +22,7 @@ usage:
   mvp         PLAN.md / JUDGE.md。立ち上がり期の駆動文書
   guarantee   docs/guarantees.md。リリース後の駆動文書
 
-doc-style と guards はどれを選んでも必ず入る。
+doc-style・guards・branch-pr はどれを選んでも必ず入る。
 
 例:
   ./install.sh ~/repos/myrepo single
@@ -37,7 +37,7 @@ resolve() {
     single|flow-single)         echo flow-single ;;
     mvp|phase-mvp)              echo phase-mvp ;;
     guarantee|phase-guarantee)  echo phase-guarantee ;;
-    doc-style|guards)           echo "$1" ;;
+    doc-style|guards|branch-pr) echo "$1" ;;
     *)                          return 1 ;;
   esac
 }
@@ -136,7 +136,7 @@ echo
 echo "取り込んだ単位: ${uniq_units[*]}（$copied ファイル）"
 echo
 echo "次にやること:"
-echo "  1. .claude/settings.snippet.json を .claude/settings.json へマージし、snippet を消す"
+echo "  1. .claude/settings.*.snippet.json をすべて .claude/settings.json へマージし、snippet を消す"
 echo "  2. 穴を埋める: grep -rn '<[^>]*>' .claude/skills docs/ops"
 echo "  3. 次の文書を読む（取り込んだあとにやること、がそれぞれに書いてある）"
 for u in "${uniq_units[@]}"; do

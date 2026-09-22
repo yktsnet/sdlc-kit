@@ -3,7 +3,7 @@
 着手前の合意を `issues/` の Issue ファイルに残す。作業が複数の PR にまたがる、着手が数日後に
 なる、担当者が複数いる、といった場合はこちら。1本の PR に収まるなら `flow-single` を選ぶ。
 
-役割の境界は [roles.md](roles.md) にある。
+役割の境界は [roles.md](roles.md)、ブランチと PR の単位は [branch-and-pr.md](branch-and-pr.md) にある。
 
 ## 入るもの
 

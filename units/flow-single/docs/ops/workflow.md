@@ -7,7 +7,7 @@
 
 ```text
 .claude/skills/work/                      完了条件を宣言し、実装してコミットまで
-.claude/skills/hand-off/                  完了条件を証拠で裏付け、PR を立てる
+.claude/skills/hand-off/                  完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
 docs/ops/workflow.md                      この文書
 ```
 
@@ -20,7 +20,8 @@ docs/ops/workflow.md                      この文書
 5. **引き渡し**（実装者） — `hand-off` が完了条件を実際に実行して裏付け、PR を立てる
 6. **マージ**（user） — PR を読んでマージする
 
-マージは人が押す。`guards` のフックが `gh pr merge` を遮断する。
+マージは人が押す。`guards` のフックが `gh pr merge` を遮断する。ブランチと PR の単位は
+[branch-and-pr.md](branch-and-pr.md) にある。
 
 ## 合意をどこに置くか
 
