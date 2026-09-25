@@ -105,6 +105,21 @@ docs/ops/daily-report.md      何のためにあるか、取り込んだあと�
 入れる前に読む: [daily-report.md](daily-report/docs/ops/daily-report.md) /
 [daily-report](daily-report/.claude/skills/daily-report/SKILL.md)
 
+## walkthrough — 中核の機能の説明資料
+
+中核の機能を1本作り終えたときに、その機能が何を受け取り、どう判断し、何を出すかを、読む人が
+手元で再現できる資料に書き起こす。エージェントと進める実装は人の理解より速く進むので、作った直後に
+認知負債を返しておくためにある。読む人には数か月後の作った本人も含むので、担当が1人でも効く。
+作業フローとは独立していて、どちらとも組める。単独で入れてもよい。
+
+```text
+.claude/skills/walkthrough/   資料が持つ要素と、書き方の決まり。資料と一覧の型は reference/
+docs/ops/walkthrough.md       何のためにあるか、取り込んだあとにやること
+```
+
+入れる前に読む: [walkthrough.md](walkthrough/docs/ops/walkthrough.md) /
+[walkthrough](walkthrough/.claude/skills/walkthrough/SKILL.md)
+
 ## flow-issue — 起票 → 実装 → 完了
 
 着手前の合意を `issues/` の Issue ファイルに残す。三役（user / 相談者 / 実行者）の分業つき。

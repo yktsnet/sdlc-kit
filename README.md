@@ -37,6 +37,7 @@ cd sdlc-kit
 | `mvp` | `phase-mvp` — `PLAN.md` / `JUDGE.md`。立ち上がり期の駆動文書 |
 | `guarantee` | `phase-guarantee` — `docs/guarantees.md`。リリース後の駆動文書 |
 | `report` | `daily-report` — 日報。push 済みのコミットから、Issue も PR も開かない読み手へ1枚を書く |
+| `walkthrough` | `walkthrough` — 中核の機能を、読む人が手元で再現できる資料に書き起こす。作った直後に認知負債を返す |
 
 選ぶときに効く決まりが3つある。
 
