@@ -6,7 +6,7 @@ SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STAMP=".sdlc-kit"
 BASE=(doc-style guards branch-pr)
 FLOWS=(flow-issue flow-single)
-EXTRAS=(phase-mvp phase-guarantee daily-report)
+EXTRAS=(phase-mvp phase-guarantee daily-report walkthrough)
 
 usage() {
   cat <<'USAGE'
@@ -22,8 +22,10 @@ usage:
   mvp         PLAN.md / JUDGE.md。立ち上がり期の駆動文書
   guarantee   docs/guarantees.md。リリース後の駆動文書
   report      日報。push 済みのコミットから上司・ステークホルダー向けの1枚を書く
+  walkthrough 中核の機能を、読む人が手元で再現できる資料に書き起こす
 
 doc-style・guards・branch-pr はどれを選んでも必ず入る。
+作業フローを選ぶと daily-report も入る。
 
 例:
   ./install.sh ~/repos/myrepo single
@@ -39,6 +41,7 @@ resolve() {
     mvp|phase-mvp)              echo phase-mvp ;;
     guarantee|phase-guarantee)  echo phase-guarantee ;;
     report|daily-report)        echo daily-report ;;
+    walkthrough)                echo walkthrough ;;
     doc-style|guards|branch-pr) echo "$1" ;;
     *)                          return 1 ;;
   esac
@@ -78,7 +81,7 @@ dest="$(cd "$dest" && pwd)"
 selected=("${BASE[@]}")
 flow=""
 for arg in "$@"; do
-  u=$(resolve "$arg") || die "不明な単位: $arg（--help を見ること）"
+  u=$(resolve "$arg") || die "不明な単位: ${arg}（--help を見ること）"
   for f in "${FLOWS[@]}"; do
     if [ "$u" = "$f" ]; then
       [ -z "$flow" ] || die "作業フローは1つだけ選ぶ（$flow と $u を同居させない）。"
@@ -87,6 +90,8 @@ for arg in "$@"; do
   done
   selected+=("$u")
 done
+# 作業フローは PR をこまめに出し、その本数を日報が吸収する前提に立つ
+[ -z "$flow" ] || selected+=(daily-report)
 # 重複を落とす
 uniq_units=()
 for u in "${selected[@]}"; do
