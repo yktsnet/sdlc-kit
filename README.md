@@ -38,12 +38,14 @@ cd sdlc-kit
 | `guarantee` | `phase-guarantee` — `docs/guarantees.md`。リリース後の駆動文書 |
 | `report` | `daily-report` — 日報。push 済みのコミットから、Issue も PR も開かない読み手へ1枚を書く |
 
-選ぶときに効く決まりが2つある。
+選ぶときに効く決まりが3つある。
 
 - **作業フローは1つだけ選ぶ。** `issue` と `single` を同居させない。選び方は
   [docs/task-flows.md](docs/task-flows.md) にある
 - **`doc-style`・`guards`・`branch-pr` は選ばせない。** どれを選んでも一緒に入る。文体の
   規範・遮断・ブランチの扱いは、書き手や走らせ方が替わった時点で最初に崩れる
+- **作業フローを選ぶと `daily-report` も入る。** 作業フローは PR をこまめに出し、その本数を
+  日報が吸収する前提に立つ。`report` だけを渡して単独で入れることもできる
 
 既存ファイルと中身が違う場合は差分を見せて確認する。黙って上書きはしない。
 

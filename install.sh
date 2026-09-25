@@ -24,6 +24,7 @@ usage:
   report      日報。push 済みのコミットから上司・ステークホルダー向けの1枚を書く
 
 doc-style・guards・branch-pr はどれを選んでも必ず入る。
+作業フローを選ぶと daily-report も入る。
 
 例:
   ./install.sh ~/repos/myrepo single
@@ -78,7 +79,7 @@ dest="$(cd "$dest" && pwd)"
 selected=("${BASE[@]}")
 flow=""
 for arg in "$@"; do
-  u=$(resolve "$arg") || die "不明な単位: $arg（--help を見ること）"
+  u=$(resolve "$arg") || die "不明な単位: ${arg}（--help を見ること）"
   for f in "${FLOWS[@]}"; do
     if [ "$u" = "$f" ]; then
       [ -z "$flow" ] || die "作業フローは1つだけ選ぶ（$flow と $u を同居させない）。"
@@ -87,6 +88,8 @@ for arg in "$@"; do
   done
   selected+=("$u")
 done
+# 作業フローは PR をこまめに出し、その本数を日報が吸収する前提に立つ
+[ -z "$flow" ] || selected+=(daily-report)
 # 重複を落とす
 uniq_units=()
 for u in "${selected[@]}"; do
