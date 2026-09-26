@@ -23,12 +23,12 @@
 | `report` | `daily-report` | **日報生成**（push 済みコミットから、Issue や PR を追わない関係者向けに日報を作成） |
 | `walkthrough` | `walkthrough` | **中核機能の解説書**（重要機能の入出力や検証手順を段階的に理解・確認できる資料） |
 
-### Common Required Units
+### Required Units
 
 以下の単位は規律を保つ基盤として、どの構成を選んでも常に自動で導入される。
 
-- **`doc-style`**: リポジトリ内の Markdown やコミットメッセージの文章規範（`.claude/skills/jp-writing/`）
-- **`guards`**: `main` への直接 push や不正な force push を機械的に拒否する安全機構
+- **`doc-style`**: リポジトリ内の Markdown やコメントの文章規範と、コミットメッセージの言語設定（`.claude/skills/jp-writing/`）
+- **`guards`**: `main` への直接 push、force push、`gh pr merge` を機械的に拒否する安全機構
 - **`branch-pr`**: ブランチと PR の運用規約、およびマージ済みローカルブランチの自動整理フック
 
 ---
@@ -94,7 +94,7 @@ TDD がテストを先に書く規律だとすれば、**GDD は約束の承認�
 
 ### Role Separation
 
-意思決定と実装作業を同一セッションで同時に行うと、判断が実装の都合に引きずられて検証できなくなる。
+決定と実行を同じ時間の中で進めると、決定が実装の都合に引きずられて検証できなくなる。
 
 - **`flow-issue`（三役の分業）**:
   - **user（人間）**: 保証の承認、レビュー、マージ
