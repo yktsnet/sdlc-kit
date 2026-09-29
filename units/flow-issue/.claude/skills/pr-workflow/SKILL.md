@@ -37,6 +37,5 @@ disable-model-invocation: true
    ✅ Committed on {branch}: {type}: {タイトル}
    Review: git diff main...{branch}
    Check: {確かめてほしい動き。画面に変更が無ければそう明言し、走らせるコマンドと出るはずの結果を書く}
-   Off-issue: {issue に書かれていない変更（保証台帳の追加など）と根拠。無ければ「なし」}
    Next: user が push・PR 作成・マージ
    ```
