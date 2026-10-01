@@ -121,7 +121,7 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 入れる前に読む: [walkthrough.md](walkthrough/docs/ops/walkthrough.md) /
 [walkthrough](walkthrough/.claude/skills/walkthrough/SKILL.md)
 
-## flow-issue — 起票 → 実装 → 完了
+## flow-issue — 起票 → 実装
 
 着手前の合意を `issues/` の Issue ファイルに残す。三役（user / 相談者 / 実行者）の分業つき。
 作業が複数の PR にまたがる、担当者が複数、といった場合はこちら。
