@@ -18,7 +18,7 @@ docs/ops/workflow.md                      この文書
 ## 一周の流れ
 
 ```text
-draft ──（user が保証節を裁可）──> open ──（実装・レビュー・マージ）──> close
+draft ──（user が保証節を裁可）──> open ──（実装・レビュー・close を載せてマージ）──> close
 ```
 
 1. **起票**（相談者） — `new-issue` で `issues/{id}_{slug}.md` を `status: draft` で書き出す
@@ -27,10 +27,15 @@ draft ──（user が保証節を裁可）──> open ──（実装・レ�
 3. **起動**（user） — 作業ブランチ `claude/{id}-{slug}` を切り、実行者をそこで起動する
 4. **実装**（実行者） — `pr-workflow` に従って実装し、ローカルコミットで止まる
 5. **レビュー**（user） — `git diff main...{branch}` を読み、動作を確かめる
-6. **公開**（user） — push → PR 作成 → マージ。PR 本文はコミットメッセージ本文をそのまま使う
-7. **クローズ**（user） — Issue の `status:` を `close` にする
+6. **公開**（user） — Issue の `status:` を `close` にしてブランチにコミットし、push → PR 作成 →
+   マージ。PR 本文はコミットメッセージ本文をそのまま使う
 
 **リモートに載るのは、user がローカルでレビューしたものだけになる。**
+
+**close は実装の PR に載せる。** マージした時点で、実装と close が同時に main に入る。マージの後で
+close を別に書くと、main に実装はあるのに Issue が open のまま残る期間ができ、close だけの
+コミットが1本増える。マージせずに PR を閉じたら close も main に入らないので、Issue は open の
+ままになる。
 
 ## 起動と公開の手順
 
@@ -56,8 +61,11 @@ issue ファイルは main 側では untracked のまま残す。**ブランチ�
 ### 公開（6 に相当）
 
 ```bash
+impl=$(git rev-parse HEAD)   # 実行者のコミット。このメッセージを PR に使う
+perl -pi -e 's/^status: open$/status: close/' issues/${id}_${slug}.md
+git commit -am "chore: close issue ${id}"
 git push -u origin claude/${id}-${slug}
-gh pr create --fill          # コミットメッセージ本文がそのまま PR 本文になる
+gh pr create --title "$(git log -1 --format=%s "$impl")" --body "$(git log -1 --format=%b "$impl")"
 gh pr merge --squash --delete-branch
 git worktree remove ../$(basename "$PWD").wt/${id}-${slug}
 ```
