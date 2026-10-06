@@ -1,7 +1,6 @@
 ## {タイトル}
 id: {00}
 branch-slug: {slug}
-github_issue:
 status: draft
 type: cleanup | fix | feat
 対象: {変更・新規作成するファイルをすべて列挙。新規は (新規) を付記}
@@ -36,7 +35,7 @@ type: cleanup | fix | feat
 
 - `status: draft` → 設計中。実行者の選択肢から除外する
 - `status: open` → 実装可能。**open は user が保証節・`対象外`・`仮定` を裁可済みであることを含む**
-- `status: close` → 完了済み（user の OK 後に実行者が更新し、実装の PR に載せる）
+- `status: close` → 完了済み（user の OK 後に実行者が `done/` へ移して更新し、実装の PR に載せる）
 
 PR を出す前の動作確認で出た問題は、実行者のセッションで直す。新しい Issue にしない。
 マージ後に問題が出た場合は、元の Issue を再 open せず、`{id}a` として新しい Issue を作成する。
