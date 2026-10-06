@@ -65,6 +65,10 @@ worktree を使うのは、main のチェックアウトを汚さずに複数の
 issue ファイルは main 側では untracked のまま残す。**ブランチ上でコミットしてから**
 起動すると、並行する Issue が互いのブランチに混入しない。
 
+main 側の issue ファイルは、マージで close の版が戻るまで `status: open` のまま残る。
+着手済みかどうかはファイルの `status:` では分からないので、`claude/{id}-{slug}` の
+ブランチの有無で見る。手元の道具で着手できる Issue を並べるなら、ブランチのあるものを外す。
+
 ### 片付け（6 と 7 の後）
 
 worktree は PR を出したら消し、ブランチはマージの後に消す。片付けを1回にまとめず、
@@ -80,6 +84,13 @@ rm issues/${id}_${slug}.md
 ブランチは、マージの後に `branch-pr` の `branch-check.sh` がセッション開始時に消す。
 worktree に取り出したままのブランチは `git branch -d` で消せないので、worktree を先に
 消しておく。PR の後に直しが要ったら、origin のブランチから worktree を作り直す。
+
+マージせずに PR を閉じたブランチは、`branch-check.sh` が消さない（マージ済みしか見ない）。
+捨てると決めたら `git branch -D claude/${id}-${slug}` で手で消す。消すと、上の見分け方で
+その Issue は未着手に戻る。
+
+この起動から片付けまでを1コマンドに畳んだ例として、[dotfiles-public](https://github.com/yktsnet/dotfiles-public)
+の `i`（`home-manager/modules/zsh/functions/aiagent.sh`）がある。
 
 ## 派生 Issue
 
