@@ -15,7 +15,7 @@ PR 本文に置く「単発版」である。**どちらもリポジトリごと
 | 合意の置き場 | `issues/{id}_{slug}.md` の保証節 | PR 本文の `## 完了条件` |
 | 残作業の一覧 | `issues/` の `status: open` | open な PR の一覧 |
 | 段の数 | 2（起票 → 実装） | 2（実装 → 引き渡し） |
-| skill | `new-issue` / `pr-workflow` | `work` / `hand-off` |
+| skill | `local-issue` / `pr-workflow` | `work` / `hand-off` |
 | ブランチ | `claude/{id}-{slug}` | `work/{slug}` |
 | 分業 | 三役（user / 相談者 / 実行者） | 実装者と user |
 
