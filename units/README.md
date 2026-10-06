@@ -128,7 +128,7 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 
 ```text
 issues/                       Issue ファイルの置き場
-.claude/skills/new-issue/     相談者が Issue を設計して書き出す。テンプレを同梱
+.claude/skills/local-issue/   相談者が Issue を設計して書き出す。テンプレを同梱
 .claude/skills/pr-workflow/   実行者が Issue に基づき実装しコミットする
 docs/ops/roles.md             三役の境界と、分業を緩める3経路
 docs/ops/workflow.md          一周の流れ、起動と公開の手順、取り込んだあとにやること
@@ -136,7 +136,7 @@ docs/ops/workflow.md          一周の流れ、起動と公開の手順、取�
 
 入れる前に読む: [roles.md](flow-issue/docs/ops/roles.md) /
 [workflow.md](flow-issue/docs/ops/workflow.md) /
-[new-issue](flow-issue/.claude/skills/new-issue/SKILL.md)
+[local-issue](flow-issue/.claude/skills/local-issue/SKILL.md)
 
 ## flow-single — 実装 → 引き渡し
 

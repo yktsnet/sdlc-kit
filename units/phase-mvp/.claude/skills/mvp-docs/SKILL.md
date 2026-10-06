@@ -103,6 +103,6 @@ PLAN.md は叩き台を私が書いてよい。ただし完成条件とスコー
 
 ## 6. 出口
 
-実装へ渡すとき: `flow-issue` を入れているなら、PLAN のアクションプラン1行を1 Issue として `new-issue` へ渡す。`flow-single` なら `work` へ渡す。どちらも入れていない段階では相談者がそのまま実装し、判断を下すたび JUDGE.md に戻る。
+実装へ渡すとき: `flow-issue` を入れているなら、PLAN のアクションプラン1行を1 Issue として `local-issue` へ渡す。`flow-single` なら `work` へ渡す。どちらも入れていない段階では相談者がそのまま実装し、判断を下すたび JUDGE.md に戻る。
 
 README を書く段で、PLAN と JUDGE を README と `docs/` へ振り分けて削除する。手順は `docs/ops/phase-mvp.md` の「畳み方」にある。

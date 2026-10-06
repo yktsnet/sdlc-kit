@@ -9,7 +9,7 @@
 
 ```text
 issues/                                   Issue ファイルの置き場。ここが唯一の真実
-.claude/skills/new-issue/                 相談者が Issue を設計して書き出す
+.claude/skills/local-issue/               相談者が Issue を設計して書き出す
 .claude/skills/pr-workflow/               実行者が Issue に基づき実装しコミットする
 docs/ops/roles.md                         三役の境界と、分業を緩める3経路
 docs/ops/workflow.md                      この文書
@@ -21,7 +21,7 @@ docs/ops/workflow.md                      この文書
 draft ──（user が保証節を裁可）──> open ──（実装・レビュー・close を載せてマージ）──> close
 ```
 
-1. **起票**（相談者） — `new-issue` で `issues/{id}_{slug}.md` を `status: draft` で書き出す
+1. **起票**（相談者） — `local-issue` で `issues/{id}_{slug}.md` を `status: draft` で書き出す
 2. **裁可**（user） — 保証節を読み、削る・足す・直したうえで `status: open` にする。
    **open とは裁可済みという意味である。** 実行者は `status:` を触らない
 3. **起動**（user） — 作業ブランチ `claude/{id}-{slug}` を切り、実行者をそこで起動する
@@ -83,6 +83,6 @@ git worktree remove ../$(basename "$PWD").wt/${id}-${slug}
 
 1. `issues/` に最初の Issue を置く（`.gitkeep` は消してよい）
 2. `CLAUDE.md` に三役と作業フローへの参照を1行書く。**規約そのものを書き写さない**
-3. `CLAUDE.md` に静的チェックの表を書く（実行者が提出前に回す手段）。`new-issue` の「確認」
+3. `CLAUDE.md` に静的チェックの表を書く（実行者が提出前に回す手段）。`local-issue` の「確認」
    フィールドと `pr-workflow` の手順4がここを参照する
 4. 起動と公開の手順を、自分の手元の形に畳む
