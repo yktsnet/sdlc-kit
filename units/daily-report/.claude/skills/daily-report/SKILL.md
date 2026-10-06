@@ -60,7 +60,7 @@ git log --branches --not --remotes=origin --format='%h %s'   # 未 push
 
 ### Issue 版（`flow-issue`）
 
-ブランチ名 `claude/{id}-{slug}` から id を拾い、`issues/{id}_*.md` の保証節と「内容」を読む。
+ブランチ名 `claude/{id}-{slug}` から id を拾い、`issues/done/{id}_*.md` の保証節と「内容」を読む。PR を出した Issue は `done/` へ移っている。main にまだ無ければ、そのブランチの同じパスを `git show origin/claude/{id}-{slug}:issues/done/...` で読む。
 
 ```bash
 git log --remotes=origin --since="<起点>" --author="$(git config user.email)" \

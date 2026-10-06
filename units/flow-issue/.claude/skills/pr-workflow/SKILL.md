@@ -42,10 +42,21 @@ disable-model-invocation: true
    ```
 9. 直しを頼まれたら、Issue の範囲内なら追加コミットで直す（手順3のスコープ外の扱いは同じ）。直した範囲について手順4の確認をやり直し、手順8の出力に戻る。直しで新しい Issue は起こさない
 10. user が PR を出すよう明示したら、次の順で進める。明示が無いまま進めない
-    1. Issue ファイルの `status: open` を `status: close` に変え、`chore: close issue {id}` でコミットする
+    1. Issue ファイルを同じ階層の `done/` へ `git mv` し、`status: open` を `status: close` に変える。`chore: close issue {id}` でコミットする
     2. `git push -u origin {branch}`
     3. PR を出す（base は main、題は手順7の実装のコミットの題）。本文はそのコミットの本文を下敷きにし、手順9の直しを反映した最終の状態に書き直す
-    4. 以下を出力して終える。**マージはしない**
+    4. `done/` のファイルの先頭に次の記録を足し、`chore: record PR for issue {id}` でコミットして push する
+       ```
+       ## PR記録: {PR の題}
+       issue: {id} ({ファイル名})
+       PR: {PR の URL}
+
+       {PR 本文}
+
+       ---
+
+       ```
+    5. 以下を出力して終える。**マージはしない**
        ```
        ✅ PR: {PR の URL}
        Next: このセッションを閉じて worktree を消す → マージ（ブランチはマージ後に branch-check が消す）

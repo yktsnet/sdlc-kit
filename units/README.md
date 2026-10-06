@@ -127,7 +127,7 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 作業が複数の PR にまたがる、担当者が複数、といった場合はこちら。
 
 ```text
-issues/                       Issue ファイルの置き場
+issues/                       Issue ファイルの置き場（直下は draft と open、閉じたものは done/）
 .claude/skills/local-issue/   相談者が Issue を設計して書き出す。テンプレを同梱
 .claude/skills/pr-workflow/   実行者が Issue に基づき実装し、確認を受けて PR を出す
 docs/ops/roles.md             三役の境界と、分業を緩める3経路

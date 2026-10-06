@@ -8,7 +8,8 @@
 ## 入るもの
 
 ```text
-issues/                                   Issue ファイルの置き場。ここが唯一の真実
+issues/                                   Issue ファイルの置き場。ここが唯一の真実。直下は draft と open だけ
+issues/done/                              閉じた Issue。PR の記録を先頭に足して残す
 .claude/skills/local-issue/               相談者が Issue を設計して書き出す
 .claude/skills/pr-workflow/               実行者が Issue に基づき実装し、確認を受けて PR を出す
 docs/ops/roles.md                         三役の境界と、分業を緩める3経路
@@ -28,8 +29,8 @@ draft ──（user が保証節を裁可）──> open ──（実装・確�
 4. **実装**（実行者） — `pr-workflow` に従って実装し、コミットで止まる
 5. **確認と直し**（user と実行者） — user が `git diff main...{branch}` を読み、動作を確かめる。
    直す点は同じセッションで伝え、実行者が追加コミットで直す。OK が出るまで繰り返す
-6. **公開**（実行者） — user の OK を受けて、Issue の `status:` を `close` にしてコミットし、
-   自分のブランチを push して PR を出す
+6. **公開**（実行者） — user の OK を受けて、Issue を `issues/done/` へ移して `status:` を `close` に
+   してコミットし、自分のブランチを push して PR を出す。PR の題・URL・本文を Issue の先頭に足す
 7. **マージ**（user） — PR を読んでマージする
 
 **リモートに載るのは、user が実行者のセッションで確かめて OK を出したものだけになる。**
@@ -43,6 +44,10 @@ draft ──（user が保証節を裁可）──> open ──（実装・確�
 close を別に書くと、main に実装はあるのに Issue が open のまま残る期間ができ、close だけの
 コミットが1本増える。マージせずに PR を閉じたら close も main に入らないので、Issue は open の
 ままになる。
+
+**閉じた Issue は `done/` へ移す。** 直下に残るのが draft と open だけになり、`ls issues/` が
+そのまま手を付けていない Issue の一覧になる。main 側の draft と open は untracked なので、
+リモートの `issues/` には `done/` だけが載る。
 
 ## 起動と片付けの手順
 
@@ -77,7 +82,8 @@ worktree は PR を出したら消し、ブランチはマージの後に消す�
 ```bash
 # PR を出したら: 実行者のセッションを閉じ、main のチェックアウトで worktree を消す
 git worktree remove ../$(basename "$PWD").wt/${id}-${slug}
-# 承認済みでまだ残っている main 側の issue ファイル（untracked）は、マージで戻る版と衝突するので消す
+# main 側に残る open の issue ファイル（untracked）を消す。閉じた版は done/ に入って戻ってくるので、
+# 残すと同じ Issue が open のまま二重に見える
 rm issues/${id}_${slug}.md
 ```
 
@@ -101,7 +107,7 @@ PR を出す前の問題は、5 の中で実行者が直す。新しい Issue �
 
 ## 取り込んだあとにやること
 
-1. `issues/` に最初の Issue を置く（`.gitkeep` は消してよい）
+1. `issues/` に最初の Issue を置く（`issues/.gitkeep` は消してよい。`issues/done/.gitkeep` は残す）
 2. `CLAUDE.md` に三役と作業フローへの参照を1行書く。**規約そのものを書き写さない**
 3. `CLAUDE.md` に静的チェックの表を書く（実行者が提出前に回す手段）。`local-issue` の「確認」
    フィールドと `pr-workflow` の手順4がここを参照する
