@@ -7,6 +7,7 @@
 終わりか・どう確かめたかを残す。違うのは置き場と、合意に加わる人である。
 
 配布物は `units/flow-solo/`・`units/flow-team/`・`units/flow-client/`。
+回し方の例は [flows/solo.md](flows/solo.md)・[flows/team.md](flows/team.md)・[flows/client.md](flows/client.md) にある。
 
 ## 違い
 
@@ -15,7 +16,7 @@
 | 作る人 | 1人。決める人と作る人が同じ | 複数 | 開発側の人数は問わない。範囲は依頼主が決める |
 | 合意の置き場 | PR 本文の `## 完了条件` | GitHub Issue の保証節 | team と同じ。依頼主への問いも Issue にする |
 | 残作業の一覧 | open な PR の一覧 | open な Issue の一覧 | team の一覧と、答え待ちの問いの一覧 |
-| 段 | 実装 → 引き渡し | 起票 → 実装 | team の2段に、答えの回収と次の選択を足す |
+| 手順 | 実装 → 引き渡し | 起票 → 実装 | team の2つに、答えの回収と次の選択を足す |
 | skill | `work` / `hand-off` | `issue-draft` / `issue-work` | team の2つと `client-next` |
 | ブランチ | `work/{slug}` | `issue/{N}-{slug}` | team と同じ |
 | 分業 | 実装者と user | 三役（user / 相談者 / 実行者） | team と同じ |

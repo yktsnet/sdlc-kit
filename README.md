@@ -15,6 +15,7 @@
 導入する機能は、目的に応じて「単位（Unit）」として切り出してある。
 
 作業フローは誰と作るかで選ぶ。合意の置き場は、1人なら PR 本文、チームなら Issue である。依頼主がいれば、答え待ちの問いも Issue で追う（[docs/task-flows.md](docs/task-flows.md)）。
+同じ機能を3つのフローで1周させた案内が [solo](docs/flows/solo.md)・[team](docs/flows/team.md)・[client](docs/flows/client.md) にある。
 
 | 単位名 | 役割 |
 |---|---|
