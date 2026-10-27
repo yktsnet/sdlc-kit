@@ -2,9 +2,7 @@
 
 取り込み先のリポジトリへ**コピーして使う**配布物。目的ごとに1つの単位にまとめてある。
 
-取り込みは [../README.md](../README.md) の Install にある `install.sh` で行う。
-スクリプトを通さないなら、単位のディレクトリの中身をそのままコピーすればよい。単位は
-取り込み先の配置を写した形になっている。
+単位は取り込み先の配置を写した形になっているので、ディレクトリの中身をそのままコピーすればよい。
 
 ```bash
 cp -R units/<単位名>/. <取り込み先>/
@@ -17,7 +15,7 @@ cp -R units/<単位名>/. <取り込み先>/
 文体と、書かないものを1枚に置く。README・CLAUDE.md・`docs/` 配下・PR 本文と、コード中の
 日本語コメントに当たる。
 
-**選ばせない。** どの単位を選んでも一緒に入る。理由は
+**選ばせない。** どの単位を入れるときも一緒に入れる。理由は
 [doc-style.md](doc-style/docs/ops/doc-style.md) にある。
 
 ```text
@@ -30,7 +28,7 @@ docs/ops/doc-style.md         リポに置く理由と、リポ固有に決め�
 実行者が自分の変更を自分で公開に載せられない状態を作る。main への push、force push、
 `gh pr merge` を拒否する。
 
-**選ばせない。** どの単位を選んでも一緒に入る。
+**選ばせない。** どの単位を入れるときも一緒に入れる。
 
 ```text
 .claude/hooks/no-push-to-main.sh   行為で判定する遮断
@@ -45,7 +43,7 @@ docs/ops/guards.md                 なぜ文書でなく機構か、取り込ん
 ブランチの単位＝PR の単位。戻す範囲を変更1本に閉じるための決まりと、済んだブランチを
 残さないための機構を置く。
 
-**選ばせない。** どの単位を選んでも一緒に入る。
+**選ばせない。** どの単位を入れるときも一緒に入れる。
 
 ```text
 .claude/hooks/branch-check.sh          セッション開始時にマージ済みブランチを掃除し、居残りを報告
@@ -90,8 +88,8 @@ docs/ops/phase-guarantee.md       何を載せるか、追従のしかた、取�
 ## daily-report — 日報
 
 push 済みのコミットから、Issue も PR も開かない読み手（上司・ステークホルダー）へ向けた1枚を
-書く。入力が git なので、どちらの作業フローとも組める。単独で入れてもよい。**作業フローを
-入れると一緒に入る。** 作業フローは PR をこまめに出し、その本数を日報が吸収する前提に立つ。
+書く。入力が git なので、どの作業フローとも組める。単独で入れてもよい。**作業フローと
+一緒に入れることを勧める。** 作業フローは PR をこまめに出すので、その本数を日報が1枚にまとめる。
 
 日報だけは `docs/reports/<担当者>/` と担当者ごとに分かれる。日報がファイル名を日付だけで
 決めるからで、同じ日に2人が書くと1枚を取り合う。
@@ -111,7 +109,7 @@ docs/ops/daily-report.md      何のためにあるか、取り込んだあと�
 書き起こす。エージェントと進める実装は人の理解より速く進むので、作った直後に認知負債を返しておく
 ためにある。読む人は資料を読み、資料を前提に AI へ質問し、必要になったときに手で確かめて動かす。
 どこまで深めるかは読む人が決める。読む人には数か月後の作った本人も含むので、担当が1人でも効く。
-作業フローとは独立していて、どちらとも組める。単独で入れてもよい。
+作業フローとは独立していて、どれとも組める。単独で入れてもよい。
 
 ```text
 .claude/skills/walkthrough/   資料が持つ要素と、書き方の決まり。資料と一覧の型は reference/
@@ -121,27 +119,9 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 入れる前に読む: [walkthrough.md](walkthrough/docs/ops/walkthrough.md) /
 [walkthrough](walkthrough/.claude/skills/walkthrough/SKILL.md)
 
-## flow-issue — 起票 → 実装
+## flow-solo — 1人で作る
 
-着手前の合意を `issues/` の Issue ファイルに残す。三役（user / 相談者 / 実行者）の分業つき。
-作業が複数の PR にまたがる、担当者が複数、といった場合はこちら。
-
-```text
-issues/                       Issue ファイルの置き場（直下は draft と open、閉じたものは done/）
-.claude/skills/local-issue/   相談者が Issue を設計して書き出す。テンプレを同梱
-.claude/skills/pr-workflow/   実行者が Issue に基づき実装し、確認を受けて PR を出す
-docs/ops/roles.md             三役の境界と、分業を緩める3経路
-docs/ops/workflow.md          一周の流れ、起動と片付けの手順、取り込んだあとにやること
-```
-
-入れる前に読む: [roles.md](flow-issue/docs/ops/roles.md) /
-[workflow.md](flow-issue/docs/ops/workflow.md) /
-[local-issue](flow-issue/.claude/skills/local-issue/SKILL.md)
-
-## flow-single — 実装 → 引き渡し
-
-着手前の合意を PR 本文に残す。Issue ファイルを持たない。変更が1本の PR に収まり、担当が
-実質1人ならこちら。
+決める人と作る人が同じなら、こちら。着手前の合意を PR 本文に残し、台帳を持たない。
 
 ```text
 .claude/skills/work/          完了条件を宣言し、実装してコミットまで
@@ -149,8 +129,37 @@ docs/ops/workflow.md          一周の流れ、起動と片付けの手順、�
 docs/ops/workflow.md          一周の流れ、乗り換える合図、取り込んだあとにやること
 ```
 
-入れる前に読む: [workflow.md](flow-single/docs/ops/workflow.md) /
-[work](flow-single/.claude/skills/work/SKILL.md)
+入れる前に読む: [workflow.md](flow-solo/docs/ops/workflow.md) /
+[work](flow-solo/.claude/skills/work/SKILL.md)
+
+## flow-team — チームで作る
+
+作る人が複数いて、誰が何を持っているかを共有するなら、こちら。着手前の合意を GitHub Issue に
+残す。三役（user / 相談者 / 実行者）の分業つき。
+
+```text
+.claude/skills/issue-draft/   相談者が Issue を設計して起票する。本文の型を同梱
+.claude/skills/issue-work/    実行者が Issue に基づき実装し、確認を受けて PR を出す
+docs/ops/roles.md             三役の境界と、分業を緩める3経路
+docs/ops/workflow.md          一周の流れ、一覧の読み方、起動と片付けの手順、取り込んだあとにやること
+```
+
+入れる前に読む: [roles.md](flow-team/docs/ops/roles.md) /
+[workflow.md](flow-team/docs/ops/workflow.md) /
+[issue-draft](flow-team/.claude/skills/issue-draft/SKILL.md)
+
+## flow-client — クライアントありで作る
+
+作る範囲を開発の外にいる依頼主の答えが決めるなら、こちら。`flow-team` に重ねて入れる
+（`flow-team` も一緒にコピーする）。依頼主への問いを Issue で追い、答えを待たずに
+仮に置いて作る。
+
+```text
+.claude/skills/client-next/   届いた答えを回収し、次に着手する Issue を選ぶ。問いの型を同梱
+docs/ops/client.md            何が変わるか、問いの Issue、仮に置いて作る決まり、取り込んだあとにやること
+```
+
+入れる前に読む: [client.md](flow-client/docs/ops/client.md)
 
 ## 取り込んだあと
 
