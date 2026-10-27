@@ -7,6 +7,7 @@
 終わりか・どう確かめたかを残す。違うのは置き場と、合意に加わる人である。
 
 配布物は `units/flow-solo/`・`units/flow-team/`・`units/flow-client/`。
+回し方の例は [flows/solo.md](flows/solo.md)・[flows/team.md](flows/team.md)・[flows/client.md](flows/client.md) にある。
 
 ## 違い
 
