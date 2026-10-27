@@ -26,6 +26,8 @@
 | `daily-report` | **日報生成**（push 済みコミットから、Issue や PR を追わない関係者向けに日報を作成） |
 | `walkthrough` | **中核機能の解説書**（重要機能の入出力や検証手順を段階的に理解・確認できる資料） |
 
+導入は、単位のディレクトリを対象のリポジトリへ `cp -R` するだけで済む。単位ごとに何が入るかと、導入後にやることは [units/README.md](units/README.md) にある。
+
 ### Required Units
 
 以下の単位は規律を保つ基盤として、どの構成でも必ず一緒に入れる。
@@ -33,23 +35,6 @@
 - **`doc-style`**: リポジトリ内の Markdown やコメントの文章規範と、コミットメッセージの言語設定（`.claude/skills/jp-writing/`）
 - **`guards`**: `main` への直接 push、force push、`gh pr merge` を機械的に拒否する安全機構
 - **`branch-pr`**: ブランチと PR の運用規約、およびマージ済みローカルブランチの自動整理フック
-
----
-
-## Installation
-
-各単位は `units/<単位名>/` の下に、取り込み先の配置をそのまま写してある。取り込みはコピー1回で済む。
-
-```bash
-git clone https://github.com/yktsnet/sdlc-kit.git
-cp -R sdlc-kit/units/<単位名>/. <取り込み先>/
-```
-
-- **必ず入れる単位**: `doc-style`・`guards`・`branch-pr` は、どの構成でも一緒にコピーする
-- **作業フローは1つだけ選ぶ**: `flow-solo`・`flow-team`・`flow-client` から1つ。`flow-client` は `flow-team` に重ねるので、両方をコピーする。選び方は [docs/task-flows.md](docs/task-flows.md) にある
-- **取り込んだあとはそのリポジトリの持ち物になる**: 以降は取り込み先で直し、配布元へは戻さない。グローバル領域（`~/.claude/` など）には置かない
-
-取り込んだあとにやることは [units/README.md](units/README.md) と、各単位の `docs/ops/` にある。
 
 ---
 
