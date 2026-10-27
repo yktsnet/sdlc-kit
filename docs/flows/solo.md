@@ -17,21 +17,28 @@
 ## 1周の流れ
 
 ```mermaid
-sequenceDiagram
-    actor U as user
-    participant A as 実装者
-    participant G as GitHub
-    U->>A: 二重予約を拒否したい
-    A-->>U: 対象・完了条件・保証を宣言して止まる
-    U->>A: 保証を直して認める（裁可）
-    A->>A: work/reject-double-booking で実装しコミット
-    A-->>U: 確かめてほしい動きを示して止まる
-    U->>A: 差分と動きを確かめて OK
-    A->>G: 完了条件を実行し、証拠を貼って PR
-    U->>G: PR を読んでマージ
+flowchart TD
+    subgraph p1 ["① 宣言"]
+        R(["👤 頼む"]) --> W{{"/work"}}
+        W --> D[対象・完了条件・保証]
+    end
+    subgraph p2 ["② 裁可"]
+        D --> A{"👤 保証"}
+        A -->|直し| D
+    end
+    subgraph p3 ["③ 実装とレビュー"]
+        A -->|裁可| B[作業ブランチで作る]
+        B --> V{"👤 差分と動き"}
+        V -->|直し| B
+    end
+    subgraph p4 ["④ 引き渡しとマージ"]
+        V -->|OK| H{{"/hand-off"}}
+        H --> P[証拠付きの PR]
+        P ==>|"👤 マージ"| M[main]
+    end
 ```
 
-### 1. 宣言
+### ① 宣言
 
 user が「二重予約を拒否したい」と頼むと、`work` は実装に入る前に次を示して止まる。
 
@@ -46,18 +53,18 @@ user が「二重予約を拒否したい」と頼むと、`work` は実装に�
 
 先に止まるのは、作ってから条件を決めると、できたものに合わせて条件を書いてしまうからである。
 
-### 2. 裁可
+### ② 裁可
 
 user は保証を読み、削る・足す・直す。ここでは「別の部屋なら同じ時間帯でも受け付ける」を維持の
 保証に足した。**裁可するまで実装に入らない。** 裁可とは、この約束で作ってよいと user が認めることを指す。
 
-### 3. 実装とレビュー
+### ③ 実装とレビュー
 
 実装者は作業ブランチ `work/reject-double-booking` を切って実装し、ローカルのコミットで止まる。
 user は `git diff main...work/reject-double-booking` を読み、重なる予約を手で入れて 409 が返るのを見る。
 直す点があればその場で伝え、実装者が追加のコミットで直す。
 
-### 4. 引き渡し
+### ④ 引き渡しとマージ
 
 `hand-off` は完了条件を実際に実行し、出力を PR 本文に貼る。宣言した完了条件と保証は、
 そのまま PR 本文に入る。
@@ -77,8 +84,6 @@ $ pytest tests/test_reservations.py
 | 接している予約は両方受け付ける | `test_adjacent_accepted` |
 | 別の部屋なら受け付ける | `test_other_room_accepted` |
 ```
-
-### 5. マージ
 
 user が PR を読んでマージする。エージェントはマージできない。`guards` のフックが `gh pr merge` を拒否する。
 
