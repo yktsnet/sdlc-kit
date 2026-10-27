@@ -10,6 +10,8 @@
 
 文中の **user** は役名で、何を作るかを決め、保証を裁可し、マージを押す人を指す。チームで作る場合は、user のほかに Issue を設計するエージェント（**相談者**）と、Issue に基づいて実装するエージェント（**実行者**）を分ける（[roles.md](units/flow-team/docs/ops/roles.md)）。1人で作る場合は、user と同じセッションで作るエージェント（**実装者**）だけが加わる。
 
+この型を1人の開発環境で回している例が [dotfiles-public](https://github.com/yktsnet/dotfiles-public) にある。Issue をリポジトリ内のファイルに置き、1人でも相談者と実行者を分けるなど、配布する単位とは実装が異なる。
+
 ---
 
 ## Units
