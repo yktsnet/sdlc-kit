@@ -58,30 +58,10 @@ user は main のチェックアウトで開いた相談者に頼む。
 > /issue-draft 同じ部屋で時間が重なる予約を受け付けないようにしたい
 ```
 
-相談者は書く前に、作業の主な語でリポ全体と過去の Issue を検索し、当たった資料を全文読む。
-
-```text
-$ rg -n -i 'overlap|重な|double' app/ docs/
-docs/spec.md:41:### 2.3 予約の一意性
-docs/spec.md:43:同じ部屋の同じ時間帯に、有効な予約は1件しか存在しない。
-$ gh issue list --state all --search "予約 重複 in:title,body"
-#10  OPEN   予約の時間を変更できるようにする   (assignee: alice)
-#7   CLOSED 予約を取り消せるようにする
-```
-
-#10 は作業中で、同じ `create_reservation` の近くを書き換える。相談者は `#10` の差分を見て、
-`create_reservation` 本体は触らず、時間の検証を関数に切り出していると確かめる。同じ箇所を書き換えるなら
-`待ち: #10` と書くところだが、今回はぶつからないので `なし` にする。#7 からは、取り消した予約が
-`status = "cancelled"` で残ることが分かる。
-
-相談者は `draft` ラベルを付けて起票し、止まる。
-
-```text
-$ gh issue create --label draft --title "同じ部屋で時間帯が重なる予約を拒否する" --body-file -
-https://github.com/example/room-booking/issues/12
-```
-
-起票された #12 の本文は次のとおりである。
+相談者は書く前に、作業の主な語でリポ全体と過去の Issue を検索し、当たった資料を全文読む。今回は
+要件の `docs/spec.md` 2.3 節と、取り消しを入れた #7、作業中の #10（予約の時間変更）が当たった。
+#10 が同じ関数を書き換えるなら `待ち: #10` と書くところだが、別の関数を直しているので `なし` にする。
+相談者は `draft` ラベルを付けて #12 を起票し、止まる。user が読むのは次の本文である。
 
 ```markdown
 slug: reject-double-booking
@@ -101,18 +81,11 @@ type: feat
 
 ### 保証
 - 新たに宣言する保証:
-  - 同じ部屋で時間帯が重なる有効な予約があれば、409 と {"detail": "room_already_booked"} を返し、保存しない
+  - 同じ部屋で時間帯が重なる有効な予約があれば、409 を返し、保存しない
   - 取り消した予約とは重ならない扱いにする
 - 維持する保証:
   - 時間帯が接している予約は両方とも受け付ける
   - 別の部屋なら同じ時間帯でも受け付ける
-
-### app/reservations.py
-- create_reservation の保存の前に、同じ room・status != "cancelled"・時間帯が重なる行を引く
-- 重なりの条件は「既存の start < 新規の end かつ 新規の start < 既存の end」
-
-### docs/api.md
-- POST /reservations のレスポンス表に 409 の行を足す
 ```
 
 **保証節** は、solo の保証と同じものを Issue の中に置いた節である。`対象外` と `仮定` を書かせるのは、
@@ -122,141 +95,39 @@ type: feat
 ### ② 裁可と着手（user）
 
 user は保証節・`対象外`・`仮定` を読み、GitHub 上で本文を直す。今回は 409 の応答にぶつかった予約の
-id を足した。
+id を返す保証を足した。直し終えたら `draft` ラベルを外す。**`draft` の無い open な Issue は、裁可済みという意味になる**。
 
-```diff
--  - 同じ部屋で時間帯が重なる有効な予約があれば、409 と {"detail": "room_already_booked"} を返し、保存しない
-+  - 同じ部屋で時間帯が重なる有効な予約があれば、409 と {"detail": "room_already_booked", "conflict_id": <id>} を返し、保存しない
-```
-
-直し終えたら `draft` ラベルを外す。**`draft` の無い open な Issue は、裁可済みという意味になる**。
+着手するときは、自分を assignee に付け、Issue ごとの worktree に作業ブランチを切り、そこで新しく開いた
+Claude Code に実行者として Issue 番号を渡す。
 
 ```text
 $ gh issue edit 12 --remove-label draft
-```
-
-着手するときは、自分を assignee に付け、Issue ごとの worktree に作業ブランチを切って、そこで
-実行者を起動する。
-
-```text
 $ gh issue edit 12 --add-assignee @me
-$ git fetch origin
-$ git worktree add ../room-booking.wt/12-reject-double-booking -b issue/12-reject-double-booking origin/main
-$ cd ../room-booking.wt/12-reject-double-booking
-$ claude
+$ git worktree add ../room-booking.wt/12 -b issue/12-reject-double-booking origin/main
+$ cd ../room-booking.wt/12 && claude
 > /issue-work 12
 ```
 
-相談者の会話を引き継がず、新しいセッションで Issue だけを読ませて始める。Issue に書いていないことは、
-実行者には伝わらない。
+相談者の会話は引き継がない。実行者は Issue だけを読んで始めるので、Issue に書いていないことは伝わらない。
 
 ### ③ 実装と確認（実行者と user）
 
-実行者は実装の前に Issue の語でリポを検索し直し、`根拠` に無い資料が見つかれば手を付ける前に聞く。
+実行者は実装の前に Issue の語でリポを検索し直す。`根拠` に無い資料が見つかれば、手を付ける前に
+「新しい Issue にする・この Issue の中で直す・見送る」のどれにするかを user に聞く。今回は README の
+応答例が見つかり、user は同じ PR で直すことにした。実行者は #12 の `対象` に `README.md` を書き足してから
+実装に入る。コミットの前に、差分のファイルと `対象` を突き合わせるからである。
 
-```text
-README.md の「API の使い方」に POST /reservations の応答例があります。Issue の対象に入っていません。
-  1. 新しい Issue にする  2. この Issue の中で直す  3. 見送る
-どれにしますか。
-```
-
-```text
-> 2 で。README も同じ PR で直して。
-```
-
-実行者は #12 の `対象` に `README.md` を書き足してから実装に入る。コミットの前に、差分のファイルと `対象` を
-突き合わせるからである。
-
-実装してコミットで止まる。コミットの本文は、④ の PR 本文の下敷きになる。
-
-```text
-feat: reject overlapping reservations in the same room
-
-## 変更内容
-POST /reservations で、同じ部屋の有効な予約と時間帯が重なる予約を 409 で拒否する。
-取り消した予約は重なりに数えない。docs/api.md と README.md の応答例に 409 を足した。
-
-## 保証
-- 重なる有効な予約は 409 と conflict_id を返し、保存しない → tests/test_reservations.py::test_overlap_rejected
-- 取り消した予約とは重ならない → tests/test_reservations.py::test_cancelled_does_not_block
-- 接している予約は両方受け付ける → tests/test_reservations.py::test_adjacent_accepted
-- 別の部屋なら受け付ける → tests/test_reservations.py::test_other_room_accepted
-
-## 静的確認結果
-$ pytest tests/
-23 passed in 1.12s
-$ ruff check app/
-All checks passed!
-$ git diff --name-only --cached
-README.md
-app/reservations.py
-docs/api.md
-tests/test_reservations.py
-
-## 検証手順
-1. 予約画面で、会議室 A の 11/2 10:00-11:00 を予約する
-2. 同じ部屋の 10:30-11:30 を予約し、「この時間は予約済みです」が出ることを見る
-```
-
-`git diff --name-only --cached` を残すのは、Issue の `対象` と差分のファイルが一致していることを示すためである。
-一致しなければ、実行者はコミットせずに実装へ戻る。
-
-```text
-✅ Committed on issue/12-reject-double-booking: feat: reject overlapping reservations in the same room
-Review: git diff main...issue/12-reject-double-booking
-Check: uvicorn app.main:app を起動し、同じ部屋の 10:00-11:00 と 10:30-11:30 を順に POST すると、2つ目が 409 と {"detail":"room_already_booked","conflict_id":1} を返す
-Next: 直す点があればこのセッションで伝えてください。問題なければ PR を出すよう伝えてください
-```
-
-user は差分を読み、curl で動きを確かめる。直す点は同じセッションで伝え、実行者が追加のコミットで直す。
-指摘のために別の Issue は立てない。合意の置き場が2つに分かれるからである。
-
-```text
-> docs/api.md の 409 の行に、conflict_id が何を指すかも書いて。
-```
+実行者はコミットで止まり、確かめてほしい動きを示す。user は差分を読んで動きを確かめ、直す点は同じ
+セッションで伝える。指摘のために別の Issue は立てない。合意の置き場が2つに分かれるからである。
 
 ### ④ PR とマージ
 
-user が OK を出すと、実行者は main を取り込んでから自分のブランチを push し、PR を出す。この間に #10 が
-先にマージされていたので、取り込みでテストをやり直している。
+user が OK を出すと、実行者は main を取り込み、確認をやり直してから自分のブランチを push し、本文の先頭に
+`Closes #12` を置いた PR を出す。user が PR を読んでマージすると、#12 が閉じる。実行者は main への push も
+マージもできない。PR を出したら、user は実行者のセッションを閉じて worktree を消す。
 
-```text
-> OK、PR を出して。
-
-$ git fetch origin && git merge origin/main
-Auto-merging app/reservations.py
-Merge made by the 'ort' strategy.
-$ pytest tests/
-27 passed in 1.30s
-$ git push -u origin issue/12-reject-double-booking
-$ gh pr create --base main --title "feat: reject overlapping reservations in the same room" --body-file -
-https://github.com/example/room-booking/pull/14
-
-✅ PR: https://github.com/example/room-booking/pull/14
-Next: このセッションを閉じて worktree を消す → マージ（Issue はマージで閉じ、ブランチはマージ後に branch-check が消す）
-```
-
-PR 本文の先頭は `Closes #12` で、その下はコミットの本文を直しまで反映した形である。user が PR を読んで
-マージすると、#12 が閉じる。実行者は main への push もマージもできない。
-
-保証台帳（`docs/guarantees.md`、`phase-guarantee` を入れたリポだけ）があれば、起票のときに台帳を `対象` に
-入れておき、同じ PR で台帳に保証を足す。
-
-```markdown
-### 4. `tests/test_reservations.py` — app/reservations.py (create_reservation)
-
-- 同じ部屋で時間帯が重なる有効な予約があれば、409 と `conflict_id` を返し、保存しない
-- 取り消した予約とは重ならない扱いにする
-- 時間帯が接している予約は両方とも受け付ける
-- 別の部屋なら同じ時間帯でも受け付ける
-
-| 保証（要約） | 対応テスト |
-|---|---|
-| 重なる予約の拒否 | `test_overlap_rejected` |
-| 取り消しは数えない | `test_cancelled_does_not_block` |
-| 接する予約は受け付ける | `test_adjacent_accepted` |
-| 別の部屋は受け付ける | `test_other_room_accepted` |
-```
+保証台帳（`docs/guarantees.md`、`phase-guarantee` を入れたリポだけ）があれば、起票のときに台帳を
+`対象` に入れておき、同じ PR で #12 の保証節を台帳に足す。
 
 マージの後に問題が出たら、#12 を開き直さず、#12 を本文で指す新しい Issue を立てる。開き直すと、
 何を裁可して作ったかが後から読めなくなる。
