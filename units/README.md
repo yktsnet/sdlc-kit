@@ -8,7 +8,8 @@
 cp -R units/<単位名>/. <取り込み先>/
 ```
 
-ここには、単位ごとに何が入るかと、入れる前に読むものを置く。
+ここには単位ごとに何が入るかと、入れる前に読むものを置く。並びは入れる順で、必須の3つ
+（`doc-style`・`guards`・`branch-pr`）、作業フロー（3つから1つ）、フェーズの駆動文書、単独で足せるものの順である。
 
 ## doc-style — 日本語文書の書き方
 
@@ -56,6 +57,48 @@ docs/ops/branch-and-pr.md              何を1本にするか、マージ、片�
 その取りこぼし（マージ前に閉じた PR など）だけになる。
 
 入れる前に読む: [branch-and-pr.md](branch-pr/docs/ops/branch-and-pr.md)
+
+## flow-solo — 1人で作る
+
+決める人と作る人が同じなら、こちら。着手前の合意を PR 本文に残し、Issue を立てない。
+
+```text
+.claude/skills/work/          完了条件を宣言し、実装してコミットまで
+.claude/skills/hand-off/      完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
+docs/ops/workflow.md          一周の流れ、乗り換える合図、取り込んだあとにやること
+```
+
+入れる前に読む: [workflow.md](flow-solo/docs/ops/workflow.md) /
+[work](flow-solo/.claude/skills/work/SKILL.md)
+
+## flow-team — チームで作る
+
+作る人が複数いて、誰が何を持っているかを共有するなら、こちら。着手前の合意を GitHub Issue に
+残す。三役（user / 相談者 / 実行者）の分業つき。
+
+```text
+.claude/skills/issue-draft/   相談者が Issue を設計して起票する。本文の型を同梱
+.claude/skills/issue-work/    実行者が Issue に基づき実装し、確認を受けて PR を出す
+docs/ops/roles.md             三役の境界と、分業を緩める3経路
+docs/ops/workflow.md          一周の流れ、一覧の読み方、起動と片付けの手順、取り込んだあとにやること
+```
+
+入れる前に読む: [roles.md](flow-team/docs/ops/roles.md) /
+[workflow.md](flow-team/docs/ops/workflow.md) /
+[issue-draft](flow-team/.claude/skills/issue-draft/SKILL.md)
+
+## flow-client — クライアントありで作る
+
+作る範囲を開発の外にいる依頼主の答えが決めるなら、こちら。`flow-team` に重ねて入れる
+（`flow-team` も一緒にコピーする）。依頼主への問いを Issue で追い、答えを待たずに
+仮に置いて作る。
+
+```text
+.claude/skills/client-next/   届いた答えを回収し、次に着手する Issue を選ぶ。問いの型を同梱
+docs/ops/client.md            何が変わるか、問いの Issue、仮に置いて作る決まり、取り込んだあとにやること
+```
+
+入れる前に読む: [client.md](flow-client/docs/ops/client.md)
 
 ## phase-mvp — 立ち上がり期の駆動文書
 
@@ -119,48 +162,6 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 入れる前に読む: [walkthrough.md](walkthrough/docs/ops/walkthrough.md) /
 [walkthrough](walkthrough/.claude/skills/walkthrough/SKILL.md)
 
-## flow-solo — 1人で作る
-
-決める人と作る人が同じなら、こちら。着手前の合意を PR 本文に残し、台帳を持たない。
-
-```text
-.claude/skills/work/          完了条件を宣言し、実装してコミットまで
-.claude/skills/hand-off/      完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
-docs/ops/workflow.md          一周の流れ、乗り換える合図、取り込んだあとにやること
-```
-
-入れる前に読む: [workflow.md](flow-solo/docs/ops/workflow.md) /
-[work](flow-solo/.claude/skills/work/SKILL.md)
-
-## flow-team — チームで作る
-
-作る人が複数いて、誰が何を持っているかを共有するなら、こちら。着手前の合意を GitHub Issue に
-残す。三役（user / 相談者 / 実行者）の分業つき。
-
-```text
-.claude/skills/issue-draft/   相談者が Issue を設計して起票する。本文の型を同梱
-.claude/skills/issue-work/    実行者が Issue に基づき実装し、確認を受けて PR を出す
-docs/ops/roles.md             三役の境界と、分業を緩める3経路
-docs/ops/workflow.md          一周の流れ、一覧の読み方、起動と片付けの手順、取り込んだあとにやること
-```
-
-入れる前に読む: [roles.md](flow-team/docs/ops/roles.md) /
-[workflow.md](flow-team/docs/ops/workflow.md) /
-[issue-draft](flow-team/.claude/skills/issue-draft/SKILL.md)
-
-## flow-client — クライアントありで作る
-
-作る範囲を開発の外にいる依頼主の答えが決めるなら、こちら。`flow-team` に重ねて入れる
-（`flow-team` も一緒にコピーする）。依頼主への問いを Issue で追い、答えを待たずに
-仮に置いて作る。
-
-```text
-.claude/skills/client-next/   届いた答えを回収し、次に着手する Issue を選ぶ。問いの型を同梱
-docs/ops/client.md            何が変わるか、問いの Issue、仮に置いて作る決まり、取り込んだあとにやること
-```
-
-入れる前に読む: [client.md](flow-client/docs/ops/client.md)
-
 ## 取り込んだあと
 
 **各単位の `docs/ops/` を読む。** 何をやるか（settings のマージ・穴埋め・CLAUDE.md への
@@ -193,3 +194,12 @@ docs/ops/client.md            何が変わるか、問いの Issue、仮に置�
   指し、中身を写さない
 - **skill は理由を繰り返さない。** 理由が要る手順では文書の節を指す
 - **文書は手順を書かない。** 進める順序とコマンドは skill が持つ
+
+## 単位を直す・足すとき
+
+配布元の不備に気づいたら、このリポジトリの `units/` を直す。コピー先を直しても配布元には戻らない。
+逆に、コピー先で入れたリポ固有の書き換えを配布元へ持ち込まない。配布元では穴のままにしておく。
+
+単位を足すときは、`units/<name>/` に取り込み先の配置をそのまま写す。深さを揃えておけば、
+コピーは `cp -R units/<name>/. <取り込み先>/` の一手で済む。足したら、本ファイルと
+[README](../README.md) の Units 表を直す。
