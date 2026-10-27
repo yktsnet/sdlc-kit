@@ -103,8 +103,8 @@ Claude Code に実行者として Issue 番号を渡す。
 ```text
 $ gh issue edit 12 --remove-label draft
 $ gh issue edit 12 --add-assignee @me
-$ git worktree add ../room-booking.wt/12 -b issue/12-reject-double-booking origin/main
-$ cd ../room-booking.wt/12 && claude
+$ git worktree add ../room-booking.wt/12-reject-double-booking -b issue/12-reject-double-booking origin/main
+$ cd ../room-booking.wt/12-reject-double-booking && claude
 > /issue-work 12
 ```
 
