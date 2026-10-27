@@ -58,19 +58,19 @@ git log --branches --not --remotes=origin --format='%h %s'   # 未 push
 
 コミットを変更ファイルごと見て、成果の単位で数え上げる。Issue に紐づく作業も紐づかない作業も同じ重みで拾う。
 
-### Issue 版（`flow-issue`）
+### チーム（`flow-team` / `flow-client`）
 
-ブランチ名 `claude/{id}-{slug}` から id を拾い、`issues/done/{id}_*.md` の保証節と「内容」を読む。PR を出した Issue は `done/` へ移っている。main にまだ無ければ、そのブランチの同じパスを `git show origin/claude/{id}-{slug}:issues/done/...` で読む。
+ブランチ名 `issue/{N}-{slug}` から Issue 番号を拾い、`gh issue view {N}` で保証節と「内容」を読む。
 
 ```bash
 git log --remotes=origin --since="<起点>" --author="$(git config user.email)" \
-  --format='%D' | grep -oE 'claude/[0-9]+[a-z]?' | sort -u
+  --format='%D' | grep -oE 'issue/[0-9]+' | sort -u
 ```
 
-- Issue ファイルが `day/<日付>` に無ければ PR は未マージなので、その `claude/*` ブランチへ一時的に切り替えて読む
-- `status: open` のまま残る Issue と裁可待ちの `status: draft` も拾い、何を待っているかを添えて「今後の対応」に並べる
+- assignee が付いたまま開いている Issue と、`draft` ラベルの付いた裁可待ちの Issue も拾い、何を待っているかを添えて「今後の対応」に並べる
+- `flow-client` なら、開いている `question` の Issue も「今後の対応」に並べ、依頼主の答え待ちであることを添える
 
-### 単発版（`flow-single`）
+### 1人（`flow-solo`）
 
 コミットが属するブランチの PR の `## 完了条件` と `## 証拠` から中身を引く。マージ前の PR も拾う。
 
@@ -97,8 +97,8 @@ gh pr list --state open --json number,title,labels,body,mergeable,statusCheckRol
   --jq '.[] | "#\(.number) \(.title)\n\(.body | split("\n")[0])"'
 ```
 
-依存のあるものを先に、無ければ番号順に並べる。CI が赤い PR と、引き渡しが済んでいない PR（Issue 版は
-`## 検証手順` が未実施、単発版は `## 証拠` が空）は「今回は見送り」と明記する。その日にマージされた PR は
+依存のあるものを先に、無ければ番号順に並べる。CI が赤い PR と、引き渡しが済んでいない PR（チームは
+`## 検証手順` が未実施、1人は `## 証拠` が空）は「今回は見送り」と明記する。その日にマージされた PR は
 「本日の実施内容」に入るので、ここには残さない。
 
 ## 6. 書き出す
