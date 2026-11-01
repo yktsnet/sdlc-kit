@@ -67,7 +67,7 @@ git log --remotes=origin --since="<起点>" --author="$(git config user.email)" 
   --format='%D' | grep -oE 'issue/[0-9]+' | sort -u
 ```
 
-- assignee が付いたまま開いている Issue と、`draft` ラベルの付いた裁可待ちの Issue も拾い、何を待っているかを添えて「今後の対応」に並べる
+- assignee が付いたまま開いている Issue と、`draft` ラベルの付いた承認待ちの Issue も拾い、何を待っているかを添えて「今後の対応」に並べる
 - `flow-client` なら、開いている `question` の Issue も「今後の対応」に並べ、依頼主の答え待ちであることを添える
 
 ### 1人（`flow-solo`）

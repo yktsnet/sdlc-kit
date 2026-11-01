@@ -23,4 +23,4 @@ description: 相談者として Issue を設計し、GitHub Issue として draf
    - 新たに宣言する保証が契約面（公開 API・CLI・外部から観測可能な振る舞い）なのに裏付けテストが対象に無い場合、台帳スコープ外を理由に素通りしない。報告でテスト欠落として明示し、本 Issue にテストを含めるか・理由を保証節に記録して見送るかを user に確認する
 5. 機密マスク: 説明文中の固有の接続情報（ドメイン実値・公開ポート・本番絶対パス・VPN IP・SSH ユーザ名など）を `<PLACEHOLDER>` に置き換える。localhost・開発ポート・リポジトリ相対パスは伏せない
 6. `gh issue create --label draft --title "{タイトル}" --body-file -` で起票する。本文は heredoc で標準入力から渡す
-7. Issue の URL と概要を報告して止まる。user が保証節を裁可したら `draft` ラベルを外すよう伝える
+7. Issue の URL と概要を報告して止まる。user が保証節を承認したら `draft` ラベルを外すよう伝える
