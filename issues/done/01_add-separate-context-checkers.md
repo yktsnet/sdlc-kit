@@ -1,7 +1,7 @@
 ## 別のコンテキストで点検する役（確認者・校正役・構成の点検役）を単位に足す
 id: 01
 branch-slug: add-separate-context-checkers
-status: open
+status: close
 type: feat
 対象:
 - units/flow-team/.claude/agents/issue-verifier.md (新規)
