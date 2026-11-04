@@ -25,7 +25,7 @@
 押す、証拠の無い完了を書かない。この4点は3つすべてに入っている。
 
 フェーズ（`phase-mvp` / `phase-guarantee`）は別の軸で、どの枠とも組める。チームでも立ち上がり期は
-あり、1人でも保証台帳は効く（[lifecycle.md](lifecycle.md)）。
+あり、1人でも保証台帳は使える（[lifecycle.md](lifecycle.md)）。
 
 ## どれを選ぶか
 

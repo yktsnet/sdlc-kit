@@ -33,7 +33,7 @@ deny は文字列で判定できるものを受け持ち、フックは行為で
    printf '{"tool_input":{"command":"git push origin main"}}' | .claude/hooks/no-push-to-main.sh
    ```
 
-   `"permissionDecision":"deny"` を含む JSON が返れば効いている。
+   `"permissionDecision":"deny"` を含む JSON が返ればフックが動いている。
 
 4. `CLAUDE.md` に禁止事項を書かない。書いてあるなら消す（deny とフックに移す）
 
