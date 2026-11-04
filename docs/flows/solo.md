@@ -19,22 +19,22 @@
 ```mermaid
 flowchart TD
     subgraph p1 ["① 宣言"]
-        R(["👤 頼む"]) --> W{{"/work"}}
-        W --> D[対象・完了条件・保証]
+        R(["👤 頼む"]) --> W{{"⌨️ /work"}}
+        W --> D[📋 対象・完了条件・保証]
     end
     subgraph p2 ["② 承認"]
         D --> A{"👤 保証"}
         A -->|直し| D
     end
     subgraph p3 ["③ 実装とレビュー"]
-        A -->|承認| B[作業ブランチで作る]
+        A -->|承認| B[🛠️ 作業ブランチで作る]
         B --> V{"👤 差分と動き"}
         V -->|直し| B
     end
     subgraph p4 ["④ 引き渡しとマージ"]
-        V -->|OK| H{{"/hand-off"}}
-        H --> P[証拠付きの PR]
-        P ==>|"👤 マージ"| M[main]
+        V -->|OK| H{{"⌨️ /hand-off"}}
+        H --> P[📬 証拠付きの PR]
+        P ==>|"👤 マージ"| M[🌿 main]
     end
 ```
 
