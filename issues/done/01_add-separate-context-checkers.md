@@ -1,3 +1,42 @@
+## PR記録: feat: 別のコンテキストで点検する役（確認者・校正役・構成の点検役）を単位に足す
+issue: 01 (01_add-separate-context-checkers.md)
+PR: https://github.com/yktsnet/sdlc-kit/pull/26
+
+## 変更内容
+- flow-team: Issue だけを基準に判定する確認者 `issue-verifier` を追加。`issue-work` にコミット後の判定（「否」は直して再開、「判定できない」は user に残す）を足し、user が見るものを使い心地と判定できなかったものに寄せた。roles.md に確認者の節と理由を置き、workflow.md の一周に判定の段を追加
+- flow-solo: `work` の宣言だけを基準に判定する確認者 `completion-verifier` を追加。`hand-off` は確認者に判定させ、返った証拠を `## 証拠` に貼る。workflow.md に、別のコンテキストで証拠を取る理由を追加
+- doc-style: 校正役 `jp-proofreader`、構成の点検役 `md-reviewer`、規範 `md-writing` を追加。呼ぶ決まりの正本を doc-style.md に置き、`issue-work`・`work` はそこを指す
+- agent 定義には `model:` を書かない。固定したいリポ向けの手順を、各単位の「取り込んだあとにやること」に記載
+- units/README.md・README.md・docs/flows/{solo,team}.md を追従。受け持ちの表に `.claude/agents/` の行を追加
+- 理由の記述は docs/ops に限り、agent 定義と skill はそこを指す
+
+## 保証
+なし（文書と agent 定義だけの変更で、テストを持たないリポのため）
+
+## 静的確認結果
+- 新規 agent 4本の frontmatter と tools: Issue の指定どおり
+- 禁止語の grep（units/）: 0件、モデル ID の grep: 0件
+- 相対リンク: 切れなし（branch-and-pr.md の2件は既存の行で、取り込み先で解決する）
+- 差分のファイルは Issue の `対象` 16件と一致
+
+## 検証手順
+1. 実際のリポへ doc-style と flow-team（または flow-solo）を取り込む
+2. 確認者・jp-proofreader・md-reviewer を1回ずつ呼び、判定の表や報告が使える粒度かを見る
+
+## 確認者の判定
+| # | 項目 | 判定 |
+|---|---|---|
+| 1 | 新規 agent 4本の frontmatter と tools | 合 |
+| 2 | 禁止語の grep が0件 | 合 |
+| 3 | モデル ID の grep が0件 | 合 |
+| 4 | issue-work / hand-off の確認者の段と再呼び出し | 合 |
+| 5 | issue-work / work の校正・点検の段 | 合 |
+| 6 | ツリー・Units 表・Required Units の一致 | 合（Required Units に md-writing は挙げていない） |
+| 7 | 受け持ちに沿い、重複が無い | 合（1回目は否。直して判定を受け直した） |
+| 8 | 相対リンクの実在 | 合（既存の branch-and-pr.md の2件は取り込み先で解決） |
+
+---
+
 ## 別のコンテキストで点検する役（確認者・校正役・構成の点検役）を単位に足す
 id: 01
 branch-slug: add-separate-context-checkers
