@@ -43,6 +43,11 @@ flowchart TD
         V -->|OK| P["📬 PR（Closes #12）"]
         P ==>|"👤 マージ"| M[🌿 main・Issue が閉じる]
     end
+    subgraph p5 ["手戻りを仕組みに反映する"]
+        RR{{"💬 相談者<br/>/rework-review"}} --> RA{"👤 採る原因"}
+    end
+    M -->|PR の手戻り| RR
+    RA -->|"/issue-draft"| I
 ```
 
 | | 残すもの | 次に読む人 | 👤 user が判断すること |
@@ -50,7 +55,7 @@ flowchart TD
 | ① 起票 | Issue の本文（`draft` ラベル付き） | user | — |
 | ② 承認と着手 | `draft` を外した Issue、assignee | 実行者、ほかの作り手 | この約束で作ってよいか |
 | ③ 実装と確認 | コミット（本文に保証とテストの対応）、確認者の判定 | user | 使い心地と、確認者が判定できなかったもの |
-| ④ PR とマージ | PR（`Closes #12`） | user | マージするか |
+| ④ PR とマージ | PR（`Closes #12`、手戻り） | user、相談者の `rework-review` | マージするか、繰り返す手戻りのどれを Issue にするか |
 
 ### ① 起票（相談者）
 
@@ -131,6 +136,10 @@ user は挙動の照合を繰り返さず、使い心地と残った確認を見
 user が OK を出すと、実行者は main を取り込み、確認をやり直してから自分のブランチを push し、本文の先頭に
 `Closes #12` を置いた PR を出す。user が PR を読んでマージすると、#12 が閉じる。実行者は main への push も
 マージもできない。PR を出したら、user は実行者のセッションを閉じて worktree を消す。
+
+PR 本文の末尾には `## 手戻り` を置く。今回は確認者が取り消した予約の扱いを「否」とし、実行者が1回直したので、
+その1行が残る。繰り返す原因は、相談者が `rework-review` で束ねて Issue にする。何を書くかと原因の分類は
+`units/flow-team/docs/ops/workflow.md`「手戻りを記録し、仕組みへ返す」にある。
 
 保証台帳（`docs/guarantees.md`、`phase-guarantee` を入れたリポだけ）があれば、起票のときに台帳を
 `対象` に入れておき、同じ PR で #12 の保証節を台帳に足す。
