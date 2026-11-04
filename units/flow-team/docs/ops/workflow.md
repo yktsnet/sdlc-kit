@@ -11,7 +11,7 @@
 .claude/skills/issue-draft/               相談者が Issue を設計して起票する。本文の型を同梱
 .claude/skills/issue-work/                実行者が Issue に基づき実装し、確認を受けて PR を出す
 .claude/agents/issue-verifier.md          実行者のコミットを Issue だけを基準に確かめる確認者
-docs/ops/roles.md                         三役の境界と、分業を緩める3経路
+docs/ops/roles.md                         三役と確認者の境界、分業を緩める3経路
 docs/ops/workflow.md                      この文書
 ```
 
