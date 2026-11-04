@@ -23,23 +23,23 @@ solo との違いは合意を PR より前の GitHub Issue に置くことと、
 ```mermaid
 flowchart TD
     subgraph p1 ["① 起票"]
-        R(["👤 頼む"]) --> C{{"相談者<br/>/issue-draft"}}
-        C --> I["Issue（draft）"]
+        R(["👤 頼む"]) --> C{{"💬 相談者<br/>/issue-draft"}}
+        C --> I["📋 Issue（draft）"]
     end
     subgraph p2 ["② 承認と着手"]
         I --> A{"👤 保証節"}
         A -->|直し| I
-        A -->|"承認：draft を外す"| O[open な Issue]
-        O ==>|"👤 assignee"| E(["実行者のセッション"])
+        A -->|"承認：draft を外す"| O[📋 open な Issue]
+        O ==>|"👤 assignee"| E(["🤖 実行者のセッション"])
     end
     subgraph p3 ["③ 実装と確認"]
-        E --> W[worktree で作る]
+        E --> W[🛠️ worktree で作る]
         W --> V{"👤 差分と動き"}
         V -->|直し| W
     end
     subgraph p4 ["④ PR とマージ"]
-        V -->|OK| P["PR（Closes #12）"]
-        P ==>|"👤 マージ"| M[main・Issue が閉じる]
+        V -->|OK| P["📬 PR（Closes #12）"]
+        P ==>|"👤 マージ"| M[🌿 main・Issue が閉じる]
     end
 ```
 
