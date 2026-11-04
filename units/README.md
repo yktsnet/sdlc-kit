@@ -20,8 +20,11 @@ cp -R units/<単位名>/. <取り込み先>/
 [doc-style.md](doc-style/docs/ops/doc-style.md) にある。
 
 ```text
-.claude/skills/jp-writing/    文章規範の本体
-docs/ops/doc-style.md         リポに置く理由と、リポ固有に決めること
+.claude/skills/jp-writing/      文章規範の本体
+.claude/skills/md-writing/      文書の組み立ての規範
+.claude/agents/jp-proofreader.md  日本語の表現を直す校正役
+.claude/agents/md-reviewer.md   文書の組み立てを点検する役
+docs/ops/doc-style.md           リポに置く理由、リポ固有に決めること、校正役と点検役を呼ぶ決まり
 ```
 
 ## guards — 公開経路を塞ぐ
@@ -65,6 +68,7 @@ docs/ops/branch-and-pr.md              何を1本にするか、マージ、片�
 ```text
 .claude/skills/work/          完了条件を宣言し、実装してコミットまで
 .claude/skills/hand-off/      完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
+.claude/agents/completion-verifier.md  完了条件を work の宣言だけを基準に確かめる確認者
 docs/ops/workflow.md          一周の流れ、乗り換える合図、取り込んだあとにやること
 ```
 
@@ -79,7 +83,8 @@ docs/ops/workflow.md          一周の流れ、乗り換える合図、取り�
 ```text
 .claude/skills/issue-draft/   相談者が Issue を設計して起票する。本文の型を同梱
 .claude/skills/issue-work/    実行者が Issue に基づき実装し、確認を受けて PR を出す
-docs/ops/roles.md             三役の境界と、分業を緩める3経路
+.claude/agents/issue-verifier.md  実行者のコミットを Issue だけを基準に確かめる確認者
+docs/ops/roles.md             三役と確認者の境界、分業を緩める3経路
 docs/ops/workflow.md          一周の流れ、一覧の読み方、起動と片付けの手順、取り込んだあとにやること
 ```
 
@@ -178,7 +183,7 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 
 ## 文書・skill・材料の受け持ち
 
-単位の中身は3か所に分かれる。**同じことを2か所に書かない。** 書くと片方だけが直され、
+単位の中身は4か所に分かれる。**同じことを2か所に書かない。** 書くと片方だけが直され、
 規則と手順が食い違う。単位を直すとき、足すときもこれに沿って分ける。
 
 | 置き場 | 持つもの | 読む人 |
@@ -186,6 +191,7 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 | `docs/ops/*.md` | なぜそうするか、変えない決まり、取り込んだあとに1回だけやること | 人。複数の skill も指す |
 | `.claude/skills/<name>/SKILL.md` | 手順。進める順序、コマンド、止まるところ、人に尋ねること | skill を呼んだときのエージェント |
 | `.claude/skills/<name>/reference/` | 実行中に使う材料。型、checklist、聞き取りの質問 | 実行中のエージェント |
+| `.claude/agents/<name>.md` | subagent の役が実行中に従う決まり。受け取るもの、見るもの、しないこと、返すもの | 呼ばれた subagent |
 
 - **文書を残すのは、skill を通らない作業にも規則を効かせるためである。** マージする人、
   レビューする人、エージェントを使わずに手で直す人も同じ規則の下にいる。skill は呼んだときに
