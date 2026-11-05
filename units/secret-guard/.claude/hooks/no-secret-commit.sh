@@ -20,7 +20,6 @@ deny() {
   exit 0
 }
 
-# 出力は先頭が D なら拒否、空なら通す。
 verdict=$(printf '%s' "$input" | python3 -c '
 import json, os, re, subprocess, sys
 d = json.load(sys.stdin)
@@ -57,7 +56,7 @@ def git(where, *args):
     r = subprocess.run(["git", "-C", where, *args], capture_output=True)
     return r.stdout.decode("utf-8", "replace") if r.returncode == 0 else None
 
-# 例として書く値（.env.example）は通す
+# .env.example などは、値を入れずに鍵の名前だけを見せるためにコミットするものなので止めない
 bad_name = re.compile(r"(^|/)(\.env(\.(?!example$|sample$|template$)[^/]+)?|id_(rsa|dsa|ecdsa|ed25519)|[^/]+\.(pem|key|p12|pfx|jks|keystore))$")
 rules = [
     ("秘密鍵", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
