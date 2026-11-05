@@ -169,6 +169,19 @@ docs/ops/walkthrough.md       何のためにあるか、取り込んだあと�
 入れる前に読む: [walkthrough.md](walkthrough/docs/ops/walkthrough.md) /
 [walkthrough](walkthrough/.claude/skills/walkthrough/SKILL.md)
 
+## grasp — アプリの全体像の概要資料
+
+アプリに初めて触る担当者に向けて、アプリが誰にどう使われ、機能どうしがどうつながっているかを
+1本の概要資料にまとめ、実装が進むたびに作り込む。作業フローとは独立していて、どれとも組める。
+
+```text
+.claude/skills/grasp/   概要資料の章立てと、差分を読んで作り込む手順
+docs/ops/grasp.md       何のためにあるか、walkthrough との分け方、取り込んだあとにやること
+```
+
+入れる前に読む: [grasp.md](grasp/docs/ops/grasp.md) /
+[grasp](grasp/.claude/skills/grasp/SKILL.md)
+
 ## 取り込んだあと
 
 **各単位の `docs/ops/` を読む。** 何をやるか（settings のマージ・穴埋め・CLAUDE.md への
