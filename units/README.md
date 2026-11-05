@@ -182,6 +182,22 @@ docs/ops/grasp.md       何のためにあるか、walkthrough との分け方�
 入れる前に読む: [grasp.md](grasp/docs/ops/grasp.md) /
 [grasp](grasp/.claude/skills/grasp/SKILL.md)
 
+## secret-guard — 秘密情報を GitHub に上げない
+
+パスワード・API キー・秘密鍵がコミットに入り、GitHub へ届くのを、手元と CI の両方で減らす。
+`guards` は main への push とマージを止めるが、push する中身は見ない。Actions を使えないリポでも、
+手元の層だけで入れられる。
+
+```text
+.claude/hooks/no-secret-commit.sh            Claude による、秘密を含むコミットと push を拒否する
+.claude/settings.secret-guard.snippet.json   フックの登録
+.claude/secret-guard.gitignore.snippet       .gitignore に足す、秘密を置くファイルの行
+.github/workflows/gitleaks.yml               PR と main への push を gitleaks で調べる
+docs/ops/secret-guard.md                     どの層で何を止めるか、GitHub の設定、取り込んだあとにやること
+```
+
+入れる前に読む: [secret-guard.md](secret-guard/docs/ops/secret-guard.md)
+
 ## 取り込んだあと
 
 **各単位の `docs/ops/` を読む。** 何をやるか（settings のマージ・穴埋め・CLAUDE.md への

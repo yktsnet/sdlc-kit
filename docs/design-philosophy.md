@@ -147,7 +147,7 @@ PR を全部読んでも全体の向かう先は出てこないし、`PLAN.md` �
 
 1〜2 は必須の単位で、エージェントが走るなら体制にかかわらず要る。3 はリポジトリごとに1つ選ぶ。
 4 は、立ち上がり期なら `phase-mvp`、壊してはいけない公開面を持ったら `phase-guarantee` を足す。
-`daily-report`・`walkthrough`・`grasp` は、どの段階でも単独で足せる。
+`daily-report`・`walkthrough`・`grasp`・`secret-guard` は、どの段階でも単独で足せる。
 
 ## 参照ではなくコピーで配る
 
