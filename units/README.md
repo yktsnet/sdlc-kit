@@ -86,7 +86,7 @@ docs/ops/workflow.md          一周の流れ、乗り換える合図、取り�
 .claude/skills/rework-review/ 相談者がマージ済みの PR の手戻りを束ね、繰り返す原因を Issue にする
 .claude/agents/issue-verifier.md  実行者のコミットを Issue だけを基準に確かめる確認者
 docs/ops/roles.md             三役と確認者の境界、分業を緩める3経路
-docs/ops/workflow.md          一周の流れ、一覧の読み方、起動と片付けの手順、手戻りの記録と分類、取り込んだあとにやること
+docs/ops/workflow.md          一周の流れ、一覧の読み方、並行して動かす決まり、起動と片付けの手順、手戻りの記録と分類、取り込んだあとにやること
 ```
 
 入れる前に読む: [roles.md](flow-team/docs/ops/roles.md) /
