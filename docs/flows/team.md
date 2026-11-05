@@ -74,8 +74,9 @@ user は main のチェックアウトで開いた相談者に頼む。
 slug: reject-double-booking
 type: feat
 対象: app/reservations.py, tests/test_reservations.py, docs/api.md
-内容: POST /reservations で、同じ部屋の有効な予約と時間帯が重なる予約を 409 で拒否する。
+目的: 同じ部屋に重なる予約が入り、利用者が現地で鉢合わせることを無くす。
       docs/spec.md 2.3 の「有効な予約は1件しか存在しない」を API で守らせる
+内容: POST /reservations で、同じ部屋の有効な予約と時間帯が重なる予約を 409 で拒否する
 対象外: 予約の時間変更（#10 の PATCH）での重なりの判定。#10 のマージ後に別 Issue にする
 仮定: 時間帯は半開区間とする（10:00-11:00 と 11:00-12:00 は重ならない）。
       取り消した予約（status = "cancelled"）は「有効な予約」に含めない
