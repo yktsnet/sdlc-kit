@@ -1,7 +1,33 @@
+## PR記録: feat: 秘密情報が GitHub に届くのを手元と CI で止める secret-guard 単位を足す
+issue: 02 (02_add-secret-guard.md)
+PR: https://github.com/yktsnet/sdlc-kit/pull/35
+
+## 変更内容
+- secret-guard: Claude のコミットと push を調べる PreToolUse のフック、その登録の snippet、`.gitignore` の snippet、gitleaks のワークフロー、`docs/ops/secret-guard.md` を追加
+- フックの拒否は guards と同じ `permissionDecision` の JSON で返し、値は出さない。push では全ローカルブランチの未 push のコミットを見る（user が承認）
+- README の Units 表、units/README.md、design-philosophy.md を追従
+
+## 保証
+確認者が使い捨てのリポでフックを直接動かし、新たに宣言した保証と維持する保証をすべて確かめた。`gitleaks:allow` を CI 側が通すことは、確認者の環境で gitleaks を動かせず判定できなかった。
+
+## 確認者の判定
+| # | 項目 | 判定 |
+|---|---|---|
+| 1 | `bash -n` が通る | 合 |
+| 2 | 試し方2つ | 合 |
+| 3 | `SHA256` が v8.30.1 の checksums と一致 | 合 |
+| 4 | snippet のパスが置いたフックを指す | 合 |
+| 5 | 禁止語の grep が0件 | 合 |
+| 6 | units/README.md のツリーと Units 表の一致 | 合 |
+| 7 | 受け持ちに沿う | 合（1回目は否。WHAT のコメント2か所を直して判定を受け直した） |
+| 8 | 相対リンクの実在 | 合 |
+
+---
+
 ## 秘密情報が GitHub に届くのを手元と CI で止める secret-guard 単位を足す
 id: 02
 branch-slug: add-secret-guard
-status: open
+status: close
 type: feat
 対象:
 - units/secret-guard/.claude/hooks/no-secret-commit.sh (新規)
