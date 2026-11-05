@@ -29,7 +29,7 @@ type: feat
 確認:
 - `bash -n units/secret-guard/.claude/hooks/no-secret-commit.sh` が通ること
 - 下の「詳細」の hook の節にある2つの試し方で、AWS のアクセスキーを含むコミットが deny の JSON で止まり、出力に値（`AKIA` に続く文字列）が含まれず、無害なファイルのコミットが何も出さずに通ること
-- `gitleaks.yml` の `SHA256` が、gitleaks の v8.30.1 のリリースの `checksums.txt` にある `gitleaks_8.30.1_linux_x64.tar.gz` の値と一致すること（`gh release download v8.30.1 -R gitleaks/gitleaks -p checksums.txt -O -` で取る）
+- `gitleaks.yml` の `SHA256` が、gitleaks の v8.30.1 のリリースの `checksums.txt` にある `gitleaks_8.30.1_linux_x64.tar.gz` の値と一致すること（`gh release download v8.30.1 -R gitleaks/gitleaks -p gitleaks_8.30.1_checksums.txt -O -` で取る）
 - `settings.secret-guard.snippet.json` の hook のパスが、置いたファイルを指していること
 - `grep -rn "~/\|dotfiles\|install.sh\|snippets/" units/secret-guard/` が0件であること
 - `units/README.md` の単位のツリーと README の Units 表が、新しく入るファイルと一致していること
@@ -64,7 +64,7 @@ PreToolUse（Bash）で、コマンドを区切り（`&&` `||` `;` `|` 改行）
 
 調べる範囲:
 - `git commit`: `git diff HEAD` の追加行。同じコマンドに `git add` があれば、`git ls-files --others --exclude-standard` のファイルも中身ごと見る
-- `git push`: `git log @{u}..HEAD`、上流が無ければ `--not --remotes` の範囲のコミットの追加行
+- `git push`: `git log --branches --not --remotes` の範囲のコミットの追加行。どのブランチを送るかは引数の形がさまざまなので、送る先を読み分けない
 
 試し方:
 
