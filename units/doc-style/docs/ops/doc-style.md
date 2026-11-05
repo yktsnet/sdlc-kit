@@ -3,9 +3,10 @@
 このリポの Markdown（README・CLAUDE.md・PLAN.md・JUDGE.md・`docs/` 配下・PR 本文）と、
 コード中の日本語コメントに当たる規範。
 
-**規範の本体は2つある。** 文の書き方は `.claude/skills/jp-writing/SKILL.md`、文書の組み立ては
-`.claude/skills/md-writing/SKILL.md` にある。ここには、規範を各リポに置く理由、リポ固有に決めること、
-書き手とは別のコンテキストで校正と点検を受ける決まりを書く。
+**規範の本体は3つある。** 文の書き方は `.claude/skills/jp-writing/SKILL.md`、文書の組み立ては
+`.claude/skills/md-writing/SKILL.md`、Mermaid 図の描き方は `.claude/skills/mermaid-diagram/SKILL.md` にある。
+ここには、規範を各リポに置く理由、リポ固有に決めること、書き手とは別のコンテキストで校正と点検を
+受ける決まりを書く。
 
 ## なぜ書き手の手元ではなくリポに置くか
 

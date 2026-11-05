@@ -37,7 +37,7 @@
 
 以下の単位は規律を保つ基盤として、どの構成でも必ず一緒に入れる。
 
-- **`doc-style`**: リポジトリ内の Markdown やコメントの文章規範と、コミットメッセージの言語設定（`.claude/skills/jp-writing/`）。書き手とは別のコンテキストで日本語の表現を直す校正役（`jp-proofreader`）と、文書の組み立てを点検する役（`md-reviewer`）を含む
+- **`doc-style`**: リポジトリ内の Markdown やコメントの文章規範、文書の組み立てと Mermaid 図の基準、コミットメッセージの言語設定。書き手とは別のコンテキストで日本語の表現を直す校正役（`jp-proofreader`）と、文書の組み立てを点検する役（`md-reviewer`）を含む
 - **`guards`**: `main` への直接 push、force push、`gh pr merge` を機械的に拒否する安全機構
 - **`branch-pr`**: ブランチと PR の運用規約、およびマージ済みローカルブランチの自動整理フック
 

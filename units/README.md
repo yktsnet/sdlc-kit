@@ -13,8 +13,8 @@ cp -R units/<単位名>/. <取り込み先>/
 
 ## doc-style — 日本語文書の書き方
 
-文体と、書かないものを1枚に置く。README・CLAUDE.md・`docs/` 配下・PR 本文と、コード中の
-日本語コメントに当たる。
+文体、書かないもの、文書の組み立て、Mermaid 図の描き方の規範を置く。README・CLAUDE.md・`docs/` 配下・
+PR 本文と、コード中の日本語コメントに当たる。
 
 **選ばせない。** どの単位を入れるときも一緒に入れる。理由は
 [doc-style.md](doc-style/docs/ops/doc-style.md) にある。
@@ -22,6 +22,7 @@ cp -R units/<単位名>/. <取り込み先>/
 ```text
 .claude/skills/jp-writing/      文章規範の本体
 .claude/skills/md-writing/      文書の組み立ての規範
+.claude/skills/mermaid-diagram/ Mermaid 図の基準と、描く・監査する手順
 .claude/agents/jp-proofreader.md  日本語の表現を直す校正役
 .claude/agents/md-reviewer.md   文書の組み立てを点検する役
 docs/ops/doc-style.md           リポに置く理由、リポ固有に決めること、校正役と点検役を呼ぶ決まり
