@@ -3,14 +3,6 @@
 着手前の合意を PR 本文に残す。Issue を立てない。決める人と作る人が同じなら、こちらを選ぶ。
 作る人が複数いて、誰が何を持っているかを共有する必要があるなら `flow-team` を選ぶ。
 
-## 入るもの
-
-```text
-.claude/skills/work/                      完了条件を宣言し、実装してコミットまで
-.claude/skills/hand-off/                  完了条件を証拠で裏付け、PR を立てる。PR 本文の型を同梱
-.claude/agents/completion-verifier.md     完了条件を work の宣言だけを基準に確かめる確認者
-docs/ops/workflow.md                      この文書
-```
 
 ## 一周の流れ
 
