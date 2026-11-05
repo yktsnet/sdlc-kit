@@ -5,14 +5,6 @@
 **この仕組みは `sdlc-kit` から取り込んだものである。** 取り込んだ時点でこのリポの
 持ち物になった。以降はここを直す。
 
-## 入るもの
-
-```text
-.claude/hooks/no-secret-commit.sh              Claude による、秘密を含むコミットと push を拒否する
-.claude/settings.secret-guard.snippet.json     上記フックの登録
-.claude/secret-guard.gitignore.snippet         .gitignore に足す、秘密を置くファイルの行
-.github/workflows/gitleaks.yml                 PR と main への push を gitleaks で調べる
-```
 
 ## どこで止めるか
 

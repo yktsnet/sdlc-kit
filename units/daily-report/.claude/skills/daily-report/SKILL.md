@@ -83,7 +83,7 @@ gh pr list --state all --search "updated:>=<起点>" --json number,title,headRef
 
 ## 4. PLAN.md / JUDGE.md があれば確認する
 
-日報の本文に載るので、書く前に片付ける。扱いは `docs/ops/phase-mvp.md`。無いファイルは飛ばす。
+日報の本文に載るので、書く前に片付ける。無いファイルは飛ばす。
 
 - **PLAN.md**：完了した行があれば、行ごと消す変更を提示し、承認を得てから直す。PLAN に無い作業なら、
   行を足すか PLAN の外として扱うかを聞く

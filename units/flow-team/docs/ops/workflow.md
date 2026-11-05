@@ -5,16 +5,6 @@
 
 役割の境界は [roles.md](roles.md)、ブランチと PR の単位は [branch-and-pr.md](branch-and-pr.md) にある。
 
-## 入るもの
-
-```text
-.claude/skills/issue-draft/               相談者が Issue を設計して起票する。本文の型を同梱
-.claude/skills/issue-work/                実行者が Issue に基づき実装し、確認を受けて PR を出す
-.claude/skills/rework-review/             相談者がマージ済みの PR の手戻りを束ね、繰り返す原因を Issue にする
-.claude/agents/issue-verifier.md          実行者のコミットを Issue だけを基準に確かめる確認者
-docs/ops/roles.md                         三役と確認者の境界、分業を緩める3経路
-docs/ops/workflow.md                      この文書
-```
 
 ## 一周の流れ
 
@@ -147,8 +137,7 @@ PR の後に直しが要ったら、origin のブランチから worktree を作
 
 ## 派生 Issue
 
-PR を出す前の問題は、6 の中で実行者が直す。新しい Issue にしない。
-
+PR を出す前の問題は、新しい Issue にせず「一周の流れ」の 6 で直す（「確認と直しを同じセッションで回す」）。
 マージした後に問題が出たら、閉じた Issue を開き直さず、元の番号を本文で指す新しい Issue を
 立てる。記録を上書きすると、何をどう承認したかが後から読めなくなる。
 

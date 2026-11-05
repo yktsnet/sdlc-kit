@@ -12,13 +12,6 @@
 寄せられる点にある。エージェントは拒否されると別の手を試すので、何を試すかを拒否文で
 指定できる。**遮断は否定ではなく分岐器である。**
 
-## 入るもの
-
-```text
-.claude/hooks/no-push-to-main.sh   main への push・force push・gh pr merge を拒否する
-.claude/settings.guards.snippet.json   上記フックの登録と、前方一致で足りる deny
-```
-
 deny は文字列で判定できるものを受け持ち、フックは行為で判定するものを受け持つ。
 `git push` が main を指しているかは、現在のブランチを見ないと決まらない。宣言的な deny
 では届かないので、コマンドを解釈するフックが要る。
