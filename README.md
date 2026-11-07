@@ -12,42 +12,51 @@
 
 ## Units
 
-導入する機能は、目的に応じて「単位（Unit）」として切り出してある。
+導入する機能は「単位（Unit）」に切り出してあり、単位のディレクトリを対象のリポジトリへ `cp -R` すれば入る。どの構成でも入れる基盤のほかは、誰と作るかと、開発のどの時期かで選ぶ。
 
-作業フローは誰と作るかで選ぶ。合意の置き場は、1人なら PR 本文、チームなら Issue である。依頼主がいれば、答え待ちの問いも Issue で追う（[docs/task-flows.md](docs/task-flows.md)）。
-同じ機能を3つのフローで1周させた案内が [solo](docs/flows/solo.md)・[team](docs/flows/team.md)・[client](docs/flows/client.md) にある。
+### 常に入れる
+
+規律を保つ基盤として、どの構成でも一緒に入れる。
+
+- **`doc-style`**: 文書とコメントの書き方の規範と、書き手とは別のコンテキストで校正・点検する役
+- **`guards`**: `main` への直接 push、force push、`gh pr merge` を機械的に拒否する安全機構
+- **`branch-pr`**: ブランチと PR の運用規約と、マージ済みブランチを片付けるフック
+
+### 誰と作るか：作業フロー（1つ選ぶ）
+
+| | 単位 | 選ぶ場合 |
+|---|---|---|
+| solo | `flow-solo` | 決める人と作る人が同じ |
+| team | `flow-team` | 作る人が複数いる |
+| client | `flow-client`（`flow-team` に重ねる） | 作る範囲を依頼主の答えが決める |
+
+違いと乗り換える合図は [docs/task-flows.md](docs/task-flows.md) にある。同じ機能を3つのフローで1周させた案内は [solo](docs/flows/solo.md)・[team](docs/flows/team.md)・[client](docs/flows/client.md) にある。
 
 文中の **user** は役名で、何を作るかを決め、保証を承認し、マージを押す人を指す。チームで作る場合は、user のほかに Issue を設計するエージェント（**相談者**）と、Issue に基づいて実装するエージェント（**実行者**）を分ける（[roles.md](units/flow-team/docs/ops/roles.md)）。1人で作る場合は、user と同じセッションで作るエージェント（**実装者**）だけが加わる。
 
-| 単位名 | 役割 |
-|---|---|
-| `flow-solo` | **1人の作業フロー**（合意を PR 本文に残す軽量フロー。完了条件は別のコンテキストの確認者が判定する。決める人と作る人が同じ場合向け） |
-| `flow-team` | **チームの作業フロー**（合意を GitHub Issue に残し、user・相談者・実行者で分業するフロー。実装は Issue を基準に確認者が判定する。PR に残した手戻りを束ね、繰り返す原因を Issue にして直す。作る人が複数の場合向け） |
-| `flow-client` | **クライアントありの作業フロー**（`flow-team` に、依頼主への問いと仮置きの扱いを重ねる。範囲を依頼主の答えが決める場合向け） |
-| `phase-mvp` | **立ち上がり期の駆動文書**（`PLAN.md` で終了条件を、`JUDGE.md` で設計判断を記録） |
-| `phase-guarantee` | **リリース後の駆動文書**（`docs/guarantees.md` で振る舞いの保証台帳を運用） |
-| `daily-report` | **日報生成**（push 済みコミットから、Issue や PR を追わない関係者向けに日報を作成） |
-| `walkthrough` | **中核機能の解説書**（重要機能の入出力や検証手順を段階的に理解・確認できる資料） |
-| `grasp` | **全体像の概要資料**（アプリが誰にどう使われ、機能どうしがどうつながるかを、初めて触る人向けの1本にまとめ、実装が進むたびに作り込む） |
-| `secret-guard` | **秘密情報を GitHub へ上げない**（`.gitignore`・Claude のコミットと push を調べるフック・PR ごとの gitleaks で、パスワードや API キーが GitHub に届くのを減らす） |
+### 開発のどの時期か：駆動文書（時期で替える）
 
-導入は、単位のディレクトリを対象のリポジトリへ `cp -R` するだけで済む。単位ごとに何が入るかと、導入後にやることは [units/README.md](units/README.md) にある。
+時期ごとに駆動文書を交代させる（[docs/lifecycle.md](docs/lifecycle.md)）。作業フローとは別の軸で、どのフローとも組める。
 
-### Required Units
+| 時期 | 単位 | 駆動文書 |
+|---|---|---|
+| 立ち上がり期 | `phase-mvp` | `PLAN.md`（終了条件）と `JUDGE.md`（設計判断） |
+| リリース後 | `phase-guarantee` | `docs/guarantees.md`（振る舞いの保証台帳） |
 
-以下の単位は規律を保つ基盤として、どの構成でも必ず一緒に入れる。
+### 必要なら足す
 
-- **`doc-style`**: リポジトリ内の Markdown やコメントの文章規範、文書の組み立てと Mermaid 図の基準、コミットメッセージの言語設定。書き手とは別のコンテキストで日本語の表現を直す校正役（`jp-proofreader`）と、文書の組み立てを点検する役（`md-reviewer`）を含む
-- **`guards`**: `main` への直接 push、force push、`gh pr merge` を機械的に拒否する安全機構
-- **`branch-pr`**: ブランチと PR の運用規約、およびマージ済みローカルブランチの自動整理フック
+どの作業フローとも組め、単独でも入れられる。
+
+- **`daily-report`**: push 済みのコミットから、Issue や PR を追わない関係者向けの日報を書く
+- **`walkthrough`**: 中核の機能を作り終えたときに、その入出力と判断を1本の解説書にする
+- **`grasp`**: アプリが誰にどう使われ、機能どうしがどうつながるかを、初めて触る人向けの概要資料にまとめる
+- **`secret-guard`**: パスワードや API キーが GitHub に届くのを、手元のフックと CI の gitleaks で減らす
+
+単位ごとに何が入るかと、導入後にやることは [units/README.md](units/README.md) にある。
 
 ---
 
 ## Design Philosophy
-
-### 駆動文書を交代させる
-
-開発文書には寿命がある。立ち上がり期は `PLAN.md` と `JUDGE.md`、公開面が固まったら保証台帳へ交代させ、単一の仕様書を永続させようとしない（[docs/lifecycle.md](docs/lifecycle.md)）。
 
 ### 約束の承認を先に行う（Guarantee-Driven Development）
 
