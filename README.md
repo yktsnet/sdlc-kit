@@ -1,6 +1,6 @@
 # sdlc-kit
 
-本リポジトリは、AI エージェント（Claude Code 等）と開発を進めるための型（ワークフロー・安全機構・文書規範）を、既存リポジトリへ段階的に導入できる単位として配るキットである。この型を1人の開発環境で回している例が [dotfiles-public](https://github.com/yktsnet/dotfiles-public) にある。Issue をリポジトリ内のファイルに置くなど、配布する単位とは実装が異なる。
+本リポジトリは、AI エージェント（Claude Code 等）と開発を進めるための型（ワークフロー・安全機構・文書規範）を、既存リポジトリへ段階的に導入できる単位として配るキットである。この型を1人の開発環境で回している例が [dotfiles-public](https://github.com/yktsnet/dotfiles-public) にある。Issue をリポジトリ内のファイルに置くなど、配布する単位とは実装が異なる。この型で揃った成果物と記録を読み、採用・育成・評価に使う部分は [mgmt-kit](https://github.com/yktsnet/mgmt-kit) が受け持つ。
 
 ## Why
 
