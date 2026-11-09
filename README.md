@@ -30,6 +30,8 @@
 | team | `flow-team` | 作る人が複数いる |
 | client | `flow-client`（`flow-team` に重ねる） | 作る範囲を依頼主の答えが決める |
 
+client で、要件を決めて依頼主の窓口を務める人（**顧客理解担当**）を開発側に置くなら、`customer` を `flow-client` に重ねる。現場と試作から要件を引き出す手順と、依頼主への照会と回収の skill が入る。
+
 違いと乗り換える合図は [docs/task-flows.md](docs/task-flows.md) にある。同じ機能を3つのフローで1周させた案内は [solo](docs/flows/solo.md)・[team](docs/flows/team.md)・[client](docs/flows/client.md) にある。
 
 文中の **user** は役名で、何を作るかを決め、保証を承認し、マージを押す人を指す。チームで作る場合は、user のほかに Issue を設計するエージェント（**相談者**）と、Issue に基づいて実装するエージェント（**実行者**）を分ける（[roles.md](units/flow-team/docs/ops/roles.md)）。1人で作る場合は、user と同じセッションで作るエージェント（**実装者**）だけが加わる。
