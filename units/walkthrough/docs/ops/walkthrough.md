@@ -46,11 +46,11 @@
 1. 資料の置き場を決め、`.claude/skills/walkthrough/reference/list-template.md` から一覧を置く。
    一覧は作成済みと予定の両方を持つ。どの中核の機能もいずれ作り終えるので、予定も先に並べておくと、
    次にどれを書くかが分かる
-2. `.claude/skills/walkthrough/SKILL.md` の「このリポでの置き場」の穴を埋める。当てはまる置き場が
+2. `.claude/skills/walkthrough/SKILL.md` の「このリポでの置き場」の `<...>` の欄を埋める。当てはまる置き場が
    無い行（仮置きを管理していない、画面が無い など）は消す
 3. `CLAUDE.md` の skill 一覧に `/walkthrough` を足す
 
-埋め残しはこれで探せる。`reference/` の型に残っている穴は、資料を書くときに埋めるものなので除く。
+埋め残しはこれで探せる。`reference/` の型に残っている `<...>` の欄は、資料を書くときに埋めるものなので除く。
 
 ```bash
 grep -rn "<[^>]*>" .claude/skills/walkthrough --exclude-dir=reference
