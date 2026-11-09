@@ -9,7 +9,7 @@ cp -R units/<単位名>/. <取り込み先>/
 ```
 
 ここには単位ごとに何が入るかと、入れる前に読むものを置く。並びは入れる順で、必須の3つ
-（`doc-style`・`guards`・`branch-pr`）、作業フロー（3つから1つ）、フェーズの駆動文書、単独で足せるものの順である。
+（`doc-style`・`guards`・`branch-pr`）、作業フロー（3つから1つ）と `flow-client` に重ねる `customer`、フェーズの駆動文書、単独で足せるものの順である。
 
 ## doc-style — 日本語文書の書き方
 
@@ -86,6 +86,7 @@ docs/ops/workflow.md          一周の流れ、乗り換える合図、取り�
 .claude/skills/issue-work/    実行者が Issue に基づき実装し、確認を受けて PR を出す
 .claude/skills/rework-review/ 相談者がマージ済みの PR の手戻りを束ね、繰り返す原因を Issue にする
 .claude/agents/issue-verifier.md  実行者のコミットを Issue だけを基準に確かめる確認者
+.claude/agents/screen-operator.md  画面をたどって見えたものと画面写真を返す操作役
 docs/ops/roles.md             三役と確認者の境界、分業を緩める3経路
 docs/ops/workflow.md          一周の流れ、一覧の読み方、並行して動かす決まり、起動と片付けの手順、手戻りの記録と分類、取り込んだあとにやること
 ```
@@ -106,6 +107,18 @@ docs/ops/client.md            何が変わるか、問いの Issue、仮に置�
 ```
 
 入れる前に読む: [client.md](flow-client/docs/ops/client.md)
+
+## customer — 顧客を理解して要件を決める
+
+要件を決め、依頼主の窓口を務める顧客理解担当を開発側に置くなら、`flow-client` に重ねて入れる（`flow-team` と `flow-client` も一緒にコピーする）。
+
+```text
+.claude/skills/qa-send/       問いの Issue から照会の一覧を下書きし、送ったら状態と照会の経路を直す
+.claude/skills/qa-collect/    照会表・議事録・チャットの答えを問いの Issue に写す
+docs/ops/customer.md          担当の分け方、顧客接点、2段のレビュー、FB の渡し方、要件の正本、取り込んだあとにやること
+```
+
+入れる前に読む: [customer.md](customer/docs/ops/customer.md)
 
 ## phase-mvp — 立ち上がり期の駆動文書
 
