@@ -252,4 +252,5 @@ docs/ops/secret-guard.md                     どの層で何を止めるか、Gi
 
 単位を足すときは、`units/<name>/` に取り込み先の配置をそのまま写す。深さを揃えておけば、
 コピーは `cp -R units/<name>/. <取り込み先>/` の一手で済む。足したら、本ファイルと
-[README](../README.md) の Units 節の該当する区分に単位名を足す。
+[README](../README.md) の Units 節の該当する区分に単位名を足す。作業フローか駆動文書の単位なら、
+Units 節の分岐図にも足す。
