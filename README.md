@@ -35,6 +35,8 @@
 
 ## How it works
 
+文中の **user** は役名で、何を作るかを決め、保証を承認し、マージを押す人を指す。チームで作る場合は、user のほかに Issue を設計するエージェント（**相談者**）と、Issue に基づいて実装するエージェント（**実行者**）を分ける（[roles.md](units/flow-team/docs/ops/roles.md)）。1人で作る場合は、user と同じセッションで作るエージェント（**実装者**）だけが加わる。
+
 どの作業フローでも、変更1本は次の形で main に入る。
 
 ```mermaid
@@ -65,11 +67,20 @@ for u in doc-style guards branch-pr flow-solo phase-mvp; do
 done
 ```
 
-例は1人で立ち上げるリポジトリの組み合わせである。チームなら `flow-solo` を `flow-team` に、リリース済みなら `phase-mvp` を `phase-guarantee` に替える。どれを選ぶかは次の Units 節で決める。
+例は1人で立ち上げるリポジトリの組み合わせである。チームなら `flow-solo` を `flow-team` に、リリース済みなら `phase-mvp` を `phase-guarantee` に替える。どれを選ぶかは Units 節で決める。
 
 コピーしたら、settings の snippet のマージ、`<...>` の欄の記入、`CLAUDE.md` への参照の3つを済ませる。手順は [units/README.md の「取り込んだあと」](units/README.md#取り込んだあと) にある。
 
----
+## Usage
+
+取り込んだあとは、Claude Code で skill を呼んで進める。solo なら、やりたいことを1行で渡すと完了条件の宣言から始まる。
+
+```text
+> /work 同じ部屋で時間が重なる予約を受け付けないようにしたい
+> /hand-off
+```
+
+`/work` が宣言・承認・実装・コミットまでを、`/hand-off` が確認者の判定と PR の作成を受け持つ。team なら、相談者のセッションで `/issue-draft` を呼んで Issue を起票し、user が承認したら、実行者のセッションで `/issue-work <Issue 番号>` を呼ぶ。
 
 ## Units
 
@@ -107,8 +118,6 @@ flowchart TD
 - **`customer`**: client で、要件を決めて依頼主の窓口を務める人（**顧客理解担当**）を開発側に置くなら重ねる。現場と試作から要件を引き出す手順と、依頼主への照会と回収の skill が入る
 - **駆動文書**: その時期の開発を進め、更新され続ける文書を指す。交代する時期は [docs/lifecycle.md](docs/lifecycle.md) にある
 
-文中の **user** は役名で、何を作るかを決め、保証を承認し、マージを押す人を指す。チームで作る場合は、user のほかに Issue を設計するエージェント（**相談者**）と、Issue に基づいて実装するエージェント（**実行者**）を分ける（[roles.md](units/flow-team/docs/ops/roles.md)）。1人で作る場合は、user と同じセッションで作るエージェント（**実装者**）だけが加わる。
-
 ### 必要なら足す
 
 どの作業フローとも組め、単独でも入れられる。
@@ -117,8 +126,6 @@ flowchart TD
 - **`walkthrough`**: 中核の機能を作り終えたときに、その入出力と判断を1本の解説書にする
 - **`grasp`**: アプリが誰にどう使われ、機能どうしがどうつながるかを、初めて触る人向けの概要資料にまとめる
 - **`secret-guard`**: パスワードや API キーが GitHub に届くのを、手元のフックと CI の gitleaks で減らす
-
----
 
 ## Design Decisions
 
