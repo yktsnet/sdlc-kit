@@ -2,7 +2,7 @@
 
 # sdlc-kit
 
-This repository distributes conventions for developing with AI agents (Claude Code) — workflows, safeguards and documentation standards — as units you copy into an existing repository. It lets a whole team use a way of working that went well for one person, so that whoever takes the work leaves output and records of the same shape.
+This repository distributes conventions for developing with AI agents (Claude Code) — workflows, safeguards and documentation standards — as units you copy into an existing repository. It lets a whole team use a way of working that went well for one person.
 
 A working example of these conventions running in one person's environment is [dotfiles-public](https://github.com/yktsnet/dotfiles-public). Its implementation differs from the units here, for example by keeping issues as files inside the repository. The part that reads the output and records these conventions produce, and uses them for hiring, growth and reviews, is [mgmt-kit](https://github.com/yktsnet/mgmt-kit).
 
@@ -88,7 +88,7 @@ After importing, you move forward by calling skills in Claude Code. In solo, pas
 
 ## Units
 
-The features are split into units. Apart from the base that every setup includes, you choose by who you build with and which period of development you are in.
+The features are split into units. Apart from the base, you choose by who you build with and which period of development you are in.
 
 ### Always include
 
@@ -134,7 +134,7 @@ Combine with any workflow, or install on their own.
 ## Design Decisions
 
 - **Approve the promises first (Guarantee-Driven Development)**: People approve the guarantees on behavior; the agent writes the tests and the code. If TDD is the discipline of writing tests first, GDD is the discipline of approving promises first. Decided afterward, the promise bends to fit whatever was built ([Zenn: Guarantee-Driven Development](https://zenn.dev/yktsnet/articles/202608-guarantee-driven-development), Japanese)
-- **Separate the role that decides from the role that builds**: In a team, the consultant who designs issues and the executor who implements them work in separate sessions, so the promise is not rewritten to suit the implementation
+- **Separate the role that decides from the role that builds**: In a team, the consultant and the executor work in separate sessions, so the promise is not rewritten to suit the implementation
 - **Put prohibitions in mechanisms**: A prohibition written in a document stops being followed the moment the reader's attention drops. Hooks and deny rules block it, and the rejection message points to the right path
 - **Do not hand what can be checked deterministically to the agent's review**: An agent's review can judge the same input differently
 - **Distribute by copying**: People without the source repository can still reproduce the procedures. Once imported, the units belong to that repository, and changes at the source do not arrive automatically
