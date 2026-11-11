@@ -43,7 +43,7 @@ client で、要件を決めて依頼主の窓口を務める人（**顧客理�
 | 時期 | 単位 | 駆動文書 |
 |---|---|---|
 | 立ち上がり期 | `phase-mvp` | `PLAN.md`（終了条件）と `JUDGE.md`（設計判断） |
-| リリース後 | `phase-guarantee` | `docs/guarantees.md`（振る舞いの保証台帳） |
+| リリース後 | `phase-guarantee` | `docs/guarantees/`（振る舞いの保証台帳） |
 
 ### 必要なら足す
 
