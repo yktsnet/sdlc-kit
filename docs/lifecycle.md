@@ -11,7 +11,7 @@
 | フェーズ | 駆動文書 | 答える問い | 配布物 |
 |---|---|---|---|
 | MVP 期 | `PLAN.md` / `JUDGE.md` | 何を作れば完成か。なぜその実装か | `units/phase-mvp/` |
-| 保証台帳期 | `docs/guarantees.md` | 何を約束し、何を約束していないか | `units/phase-guarantee/` |
+| 保証台帳期 | `docs/guarantees/` | 何を約束し、何を約束していないか | `units/phase-guarantee/` |
 
 MVP 期の2文書を足場として畳む理由と、MVP 期から保証台帳期へ移る交代点は
 [phase-mvp.md](../units/phase-mvp/docs/ops/phase-mvp.md)、README の代わりに台帳を置く理由は

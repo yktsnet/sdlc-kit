@@ -23,7 +23,7 @@ tools: Bash, Read, Grep, Glob
   宣言を書き直したコミットがあれば、新しいほうを基準にする
 - リポの `CLAUDE.md` の「静的チェック」「検証手段」
 - `git diff --name-only main...HEAD` と `git diff main...HEAD`
-- リポに `docs/guarantees.md` があれば、その差分
+- リポに `docs/guarantees/` があれば、その差分
 
 ## 確かめること
 
@@ -49,7 +49,7 @@ tools: Bash, Read, Grep, Glob
 
 宣言の保証ごとに、対応するテストを読み、そのテストが保証の文言どおりの振る舞いを固定しているかを見る。
 テストの名前ではなく、入力と照合の中身で判断する。保証より弱いことしか確かめていなければ「否」とする。
-台帳の記載に変更が出るなら、`docs/guarantees.md` が同じブランチで直っているかも見る。
+台帳の記載に変更が出るなら、`docs/guarantees/` の該当するファイルが同じブランチで直っているかも見る。
 
 ### 範囲
 

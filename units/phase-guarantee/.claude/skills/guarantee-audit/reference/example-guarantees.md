@@ -1,56 +1,83 @@
-この下の区切り線から先が `docs/guarantees.md` のサンプル（ダミーの `packages/example/` を対象とした汎用化サンプル）。実在のリポではパッケージ名・関数名・テスト名をそのリポのものに置き換える。
+この下の区切り線から先が `docs/guarantees/` のサンプル（ダミーの `packages/example/` を対象とした汎用化サンプル）。入口の `README.md` と、約束の対象ごとのファイル2つからなる。実在のリポではパッケージ名・関数名・テスト名をそのリポのものに置き換える。
 
 ## サンプルから読み取るべきポイント
 
-- **見出し（H1〜H3）は英語、本文（箇条書き・表・注釈）は日本語**。見出しの丸括弧も半角 `()` を使う（全角「（）」は本文のみ）。
-- **区切りは常にテストファイル単位**。`### N. \`tests/....py\` — target module/class (function)` の形式で、ファイルパスは常にバッククォートで囲む。
-- **主語の反復ルール**: 区切り内が単一の関数・メソッドだけを扱うなら、箇条書きのたびに主語（関数名）を書き直さない（サンプルの区切り1）。区切り内に複数の異なる関数・メソッドが混在するなら、行ごとに主語を明示する（サンプルの区切り2）。前者で毎回主語を書くと型の反復になり、後者で主語を省くとどの対象の保証か分からなくなる。
-- **本文の項目数と表の行数は一致させる**（1行に複数保証をまとめて集約した場合を除き、単純に「本文にあるのに表に無い」が起きないようにする）。
-- **表は索引であって保証の宣言場所ではない**。「保証（要約）」列は本文の言い換えの短縮形であり、そこだけ読んでも保証の全文にはならない。
+- **README は台帳を初めて開いた人が決まりを読み取れるように書く**。目的・分け方・書き方・運用を数行ずつ置き、ファイルの一覧と、テストの無い約束があれば Gaps を続ける。末尾に About は置かず、対象範囲は冒頭に書く。書き足す人が README だけを読んで、どのファイルに何を足すかを決められる状態にする。
+- **ファイルは約束の対象ごと**。テストファイルの単位でも Issue の単位でもない。サンプルでは `load_widget` と `Widget`/`WidgetRegistry` が別の対象で、テストが1つのファイルにあっても対象ごとに分ける。
+- **対象のファイルは H1 と表だけ**。表の外に宣言の本文を書かない。表の1行が約束の全文で、要約ではない。約束が10行以上のファイルは、`##` の見出しで内容のまとまりに分け、見出しごとに表を置く（1つの見出しに3行以上。10行未満なら見出しを置かない）（下の `registry` の見本）。ファイルは分けない。
+- **1行に約束を1つ**。「A し、B し、C する」と書きたくなったら行を分ける。
+- 主語は行ごとに書く。ファイルが単一の関数だけを扱うなら省いてよい（サンプルの `loader.md`）。
 - **Gaps は本体と明確に区別**し、なぜ未保証と判断したかが分かる粒度で書く。空になったら節ごと削除する（「無し」と書き残さない）。
-- **About は注釈程度に短く**。対象範囲・対象外・欠落の意味論（「ここに載っていない振る舞いは約束ではなく、予告なく変わりうる」）を1〜2文にまとめる。「対象範囲」「対象外」を別見出しに割らない。
+- 見出しは英語（`# Guarantee Ledger`・`## Files`・`## Gaps`）、対象のファイルの H1 は対象の名前。
 
 ---
 
+`docs/guarantees/README.md`:
+
+```markdown
 # Guarantee Ledger
 
-## Guarantees
+このリポが外へ約束している振る舞いと、それを守るテストの一覧である。約束が破れればテストが落ちるので、
+ここに書いたことは気づかないうちに実装とずれていかない。**ここに載っていない振る舞いは約束ではなく、予告なく変わりうる。**
+対象は `packages/example/` の公開関数・クラスとその送出例外で、アンダースコア始まりの関数・メソッドと `app/` 配下（未着手）は対象外である。地位は `docs/design-decisions.md` と同格。
 
-### 1. `tests/example/test_loader.py` — packages/example/loader.py (load_widget)
+- 目的: いま何を約束しているかを1か所で読む。変更の前に、壊してはいけない約束をここから引く。テストの無い約束を Gaps に残す
+- 分け方: 約束の対象（モジュール・公開 API の群・CLI のコマンド）ごとに1ファイル。テストファイルや Issue の単位では分けない。新しい対象を作ったときだけファイルを足す
+- 書き方: 各ファイルに「保証｜対応テスト」の表を1つ置き、1行に約束を1つ、宣言文で書く。出典・経緯・設計の理由は書かない（`docs/design-decisions.md` が持つ）。UI の見た目と、手で確かめる操作は載せない。約束が10行以上のファイルは、内容のまとまりで `##` の見出しを立て、見出しごとに3行以上の表を置く（ファイルは分けない）
+- 引き方: 変更の前に、その対象のファイルを開いて守る約束を読む。テストが落ちたら、テストの名前で台帳を検索すると、破れた約束の行が見つかる
+- 運用: 変更の前にこの README を読み、変更が触れるファイルから「維持する保証」を引く。約束を足す・変える・消すときは、承認を受けた保証節の文のまま、該当するファイルの表に行を足す・直す・消し、対応テストも同じ変更で直す。Issue や作業ごとにファイルや節を起こさない。テストの無い約束は Gaps に書き、テストを足したら移す。乖離は `guarantee-audit` で棚卸しする
 
-- 存在する YAML パスを渡すと `Widget` インスタンスを返し、`name`/`size` フィールドをそのまま反映する
-- 拡張子が `.yaml`/`.yml` 以外のパスは `ValueError` を送出する
-- ファイルが存在しない場合は `FileNotFoundError` を送出する
+## Files
 
-| 保証（要約） | 対応テスト |
-|---|---|
-| YAML から `Widget` を復元 | `test_load_widget_parses_yaml` |
-| 拡張子検証 | `test_load_widget_rejects_bad_extension` |
-| 存在しないファイル | `test_load_widget_missing_file` |
-
-*（区切り内は `load_widget` 一つだけなので、箇条書きのたびに「`load_widget` は」を繰り返さない）*
-
-### 2. `tests/example/test_widget.py` — packages/example/widget.py (Widget / WidgetRegistry)
-
-- `Widget.render()` は `size` に応じてインデントされた文字列を返す
-- `WidgetRegistry.register(widget)` は同名の `Widget` が既に登録されていると `KeyError` を送出する
-- `WidgetRegistry.get(name)` は未登録の名前に対して `None` を返す
-
-| 保証（要約） | 対応テスト |
-|---|---|
-| レンダリング | `test_widget_render_indents_by_size` |
-| 重複登録の拒否 | `test_registry_rejects_duplicate_name` |
-| 未登録名の照会 | `test_registry_get_returns_none_for_unknown` |
-
-*（区切り内に `Widget.render` と `WidgetRegistry` の2メソッドが混在するので、行ごとに主語を明示する）*
+| 約束の対象 |
+|---|
+| [loader](loader.md) |
+| [widget](widget.md) |
 
 ## Gaps
 
-以下は保証すべきと思われるが、対応するテストが無い。
-
 - `load_widget` は相対パスを渡した場合の解決基準（呼び出し元の cwd 基準か、モジュール基準か）が未保証
 - `WidgetRegistry` のスレッドセーフ性（並行 `register` 呼び出し時の挙動）が未保証
+```
 
-## About
+`docs/guarantees/loader.md`（単一の関数だけを扱うので、主語の `load_widget` を省く）:
 
-対象は `packages/example/` の公開関数・クラスとその送出例外。対象外はアンダースコア始まりの関数・メソッドと `app/` 配下（未着手）。**ここに載っていない振る舞いは約束ではなく、予告なく変わりうる。** 地位は design-decisions.md 相当のドキュメントと同格。
+```markdown
+# loader
+
+| 保証 | 対応テスト |
+|---|---|
+| 存在する YAML パスを渡すと `Widget` を返し、`name`・`size` をそのまま持つ | `test_load_widget_parses_yaml` |
+| 拡張子が `.yaml`・`.yml` 以外のパスは `ValueError` を送出する | `test_load_widget_rejects_bad_extension` |
+| ファイルが無ければ `FileNotFoundError` を送出する | `test_load_widget_missing_file` |
+```
+
+`docs/guarantees/widget.md`（2つのクラスを扱うので、行ごとに主語を書く）:
+
+```markdown
+# widget
+
+| 保証 | 対応テスト |
+|---|---|
+| `Widget.render()` は `size` に応じてインデントした文字列を返す | `test_widget_render_indents_by_size` |
+| `WidgetRegistry.register(widget)` は同名の `Widget` が登録済みなら `KeyError` を送出する | `test_registry_rejects_duplicate_name` |
+| `WidgetRegistry.get(name)` は未登録の名前に `None` を返す | `test_registry_get_returns_none_for_unknown` |
+```
+
+約束が10行以上のファイルの見本（見出しごとに表を置く。行は一部だけ載せている。実物では1つの見出しに3行以上が入る）。`docs/guarantees/registry.md`:
+
+```markdown
+# registry
+
+## 登録
+
+| 保証 | 対応テスト |
+|---|---|
+| `WidgetRegistry.register(widget)` は同名の `Widget` が登録済みなら `KeyError` を送出する | `test_registry_rejects_duplicate_name` |
+
+## 照会
+
+| 保証 | 対応テスト |
+|---|---|
+| `WidgetRegistry.get(name)` は未登録の名前に `None` を返す | `test_registry_get_returns_none_for_unknown` |
+```
