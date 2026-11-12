@@ -4,7 +4,7 @@
 
 本リポジトリは AI エージェント（Claude Code）と開発するための型（ワークフロー・安全機構・文書規範）を、既存のリポジトリへコピーで取り込める単位として配る。1人がうまく回した進め方を、チームの誰もが使えるようにする。
 
-この型を1人の開発環境で回している実例が [dotfiles-public](https://github.com/yktsnet/dotfiles-public) にある。Issue をリポジトリ内のファイルに置くなど、配る単位とは実装が異なる。この型で揃った成果物と記録を読み、採用・育成・評価に使う部分は [mgmt-kit](https://github.com/yktsnet/mgmt-kit) が受け持つ。
+この型は1人の開発環境 [dotfiles-public](https://github.com/yktsnet/dotfiles-public) で回してきた進め方から、チームのリポジトリへ持ち込める分を切り出したものである。dotfiles-public では Issue をリポジトリ内のファイルに置くなど、配る単位とは実装が異なる。この型で揃った成果物と記録を読み、採用・育成・評価に使う部分は [mgmt-kit](https://github.com/yktsnet/mgmt-kit) が受け持つ。
 
 | 型が無いと | 型を入れると |
 |---|---|

@@ -4,7 +4,7 @@
 
 This repository distributes conventions for developing with AI agents (Claude Code) — workflows, safeguards and documentation standards — as units you copy into an existing repository. It lets a whole team use a way of working that went well for one person.
 
-A working example of these conventions running in one person's environment is [dotfiles-public](https://github.com/yktsnet/dotfiles-public). Its implementation differs from the units here, for example by keeping issues as files inside the repository. The part that reads the output and records these conventions produce, and uses them for hiring, growth and reviews, is [mgmt-kit](https://github.com/yktsnet/mgmt-kit).
+These conventions are the parts that carry over to team repositories, cut out from the practices developed in one person's environment, [dotfiles-public](https://github.com/yktsnet/dotfiles-public). Its implementation differs from the units here, for example by keeping issues as files inside the repository. The part that reads the output and records these conventions produce, and uses them for hiring, growth and reviews, is [mgmt-kit](https://github.com/yktsnet/mgmt-kit).
 
 Documents in this repository linked from this page are in Japanese. External articles are marked individually.
 
