@@ -22,3 +22,10 @@ description: 相談者として Issue を設計し、GitHub Issue として draf
 5. 機密マスク: `docs/ops/branch-and-pr.md`「コミットと PR に載せないもの」に挙げた固有の接続情報を `<PLACEHOLDER>` に置き換える。localhost・開発ポート・リポジトリ相対パスは伏せない
 6. `gh issue create --label draft --title "{タイトル}" --body-file -` で起票する。本文は heredoc で標準入力から渡す
 7. Issue の URL と概要を報告して止まる。user が保証節を承認したら `draft` ラベルを外すよう伝える
+   - `## 待ちと手戻り` の節が `なし` でないのに `rework-read` のラベルが無いマージ済みの PR が10本を超えていたら、`rework-review` を回すよう報告に1行添える（`docs/ops/workflow.md`「束ねて Issue にする」）
+
+     ```bash
+     gh pr list --state merged --search "-label:rework-read" --limit 1000 --json body \
+       --jq '[.[] | (.body // "" | gsub("\r";"")) | (capture("(?:^|\\n)## (?:待ちと)?手戻り\\n(?<s>.*?)(?:\\n## |\\z)"; "m") // null)
+             | select(. != null) | .s | select(test("^\\s*なし\\s*$") | not)] | length'
+     ```
